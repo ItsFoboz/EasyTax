@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { calculateTax } from "../src/calculate-tax.js";
-import { getTaxConstants } from "../src/constants/index.js";
-import { bgnInvoice, evenMonthlyInvoices, profile } from "./helpers.js";
+import { calculateTax } from "../src/calculate-tax";
+import { getTaxConstants } from "../src/constants/index";
+import { bgnInvoice, evenMonthlyInvoices, profile } from "./helpers";
 
 describe("calculateTax — basic flow (2024)", () => {
   const year = 2024;

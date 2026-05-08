@@ -16,7 +16,7 @@
  *  - All rates (income tax, pension, health, sickness, UPF) unchanged.
  */
 
-import type { TaxConstants } from "./schema.js";
+import type { TaxConstants } from "./schema";
 
 export const constants2025: TaxConstants = {
   year: 2025,

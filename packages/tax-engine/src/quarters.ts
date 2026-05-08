@@ -1,4 +1,4 @@
-import type { Invoice, QuarterlyBreakdown } from "./types.js";
+import type { Invoice, QuarterlyBreakdown } from "./types";
 
 export type QuarterIndex = 1 | 2 | 3 | 4;
 

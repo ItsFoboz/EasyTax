@@ -1,4 +1,4 @@
-import type { Invoice, InsuranceProfile } from "../src/types.js";
+import type { Invoice, InsuranceProfile } from "../src/types";
 
 export function bgnInvoice(date: string, amount: number, id?: string): Invoice {
   return {

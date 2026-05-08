@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
-import { calculateTax } from "../src/calculate-tax.js";
-import { quarterFromIsoDate, sumByQuarter } from "../src/quarters.js";
-import { computeVatProximity } from "../src/vat.js";
-import { bgnInvoice, profile } from "./helpers.js";
+import { calculateTax } from "../src/calculate-tax";
+import { quarterFromIsoDate, sumByQuarter } from "../src/quarters";
+import { computeVatProximity } from "../src/vat";
+import { bgnInvoice, profile } from "./helpers";
 
 describe("quarterFromIsoDate", () => {
   it("maps months to quarters correctly", () => {

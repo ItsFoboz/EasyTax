@@ -1,9 +1,9 @@
-export { calculateTax } from "./calculate-tax.js";
-export { calculateResidualSocialSecurity } from "./social-security.js";
-export { computeVatProximity } from "./vat.js";
-export { quarterFromIsoDate, sumByQuarter, computeQuarterly } from "./quarters.js";
-export { getTaxConstants, listSupportedYears } from "./constants/index.js";
-export type { TaxConstants } from "./constants/index.js";
+export { calculateTax } from "./calculate-tax";
+export { calculateResidualSocialSecurity } from "./social-security";
+export { computeVatProximity } from "./vat";
+export { quarterFromIsoDate, sumByQuarter, computeQuarterly } from "./quarters";
+export { getTaxConstants, listSupportedYears } from "./constants/index";
+export type { TaxConstants } from "./constants/index";
 export type {
   InsuranceProfileType,
   InsuranceProfile,
@@ -14,4 +14,4 @@ export type {
   TaxResult,
   TaxResultSuccess,
   RequiresAccountant,
-} from "./types.js";
+} from "./types";

@@ -12,7 +12,7 @@
  * Update this single file. All downstream logic reads from here.
  */
 
-import type { TaxConstants } from "./schema.js";
+import type { TaxConstants } from "./schema";
 
 export const constants2024: TaxConstants = {
   year: 2024,

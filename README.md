@@ -4,34 +4,68 @@ Bulgarian freelancer tax management. Calculates annual income tax and residual
 social security, generates NRA Declaration Art. 50 XML for upload to
 `portal.nra.bg`, and tracks deadlines.
 
-> **Status:** Phase 1 — `tax-engine` package only. UI, API, AI invoice
-> extraction, and NRA XML generation come next.
+> **Status:** Phase 1 ✅ tax-engine · Phase 2 ✅ Next.js + Supabase + onboarding + dashboard
+> Phase 3+ (AI invoice extraction, NRA XML, documents UI) deferred.
 
-## Stack (planned)
+## Stack
 
-- **Frontend + API:** Next.js (App Router) on Vercel
-- **Database / auth / storage:** Supabase
-- **AI invoice extraction:** Anthropic Claude API
-- **PDF generation:** pdf-lib
-- **Email:** Resend
+- **App:** Next.js 15 App Router (TypeScript, Tailwind, React 19) — Vercel-ready
+- **Database / auth / storage:** Supabase (RLS-locked)
+- **Tax engine:** local workspace package, pure functions, zero deps
+- **AI invoice extraction:** Anthropic Claude API (Phase 3)
+- **NRA XML + PDF preview:** custom builder + pdf-lib (Phase 4)
+- **Email:** Resend (Phase 4)
 
 ## Repository layout
 
 ```
 apps/
-  web/                 # Next.js app (Phase 2+)
+  web/                 # Next.js 15 app
+    app/
+      page.tsx                  # public landing → redirects when authed
+      (auth)/login, register    # Supabase auth
+      onboarding/               # 4-step wizard
+      dashboard/                # live tax calculation, RSC
+      invoices/                 # list + (Phase 3) AI upload
+      api/
+        profile/                # POST onboarding payload
+        invoices/               # GET/POST manual CRUD
+        tax/[year]/calculate/   # GET live tax result
+    lib/
+      supabase/                 # browser, server, middleware clients
+      auth.ts, format.ts, deadlines.ts
+    middleware.ts               # session refresh + auth gate
 packages/
-  tax-engine/          # ✅ Phase 1 — pure-function tax calculations
-  nra-xml/             # Phase 3 — XML + XSD validation
-  invoice-extractor/   # Phase 3 — Claude API wrapper
+  tax-engine/          # ✅ pure-function tax calculations + 42 passing tests
+supabase/
+  migrations/          # SQL — initial schema + RLS policies
+  README.md            # how to apply
 docs/
-  tax-rules/           # One markdown per year — rates, thresholds, deadlines
-  nra-schemas/         # NRA XSD per year (added Phase 3)
+  tax-rules/           # one markdown per year, rates / thresholds / deadlines
+vercel.json            # build configuration for monorepo deploy
+```
+
+## Quick start
+
+```bash
+git clone https://github.com/ItsFoboz/EasyTax.git
+cd EasyTax
+pnpm install
+
+# 1. Set up Supabase (see supabase/README.md), fill in apps/web/.env.local
+cp apps/web/.env.example apps/web/.env.local
+
+# 2. Run tests
+pnpm --filter @easytax/tax-engine test
+
+# 3. Run the app
+pnpm --filter @easytax/web dev
+# → http://localhost:3000
 ```
 
 ## Phase 1 — `tax-engine`
 
-**Pure functions. Zero runtime dependencies. 100% test coverage on calculation logic.**
+Pure functions. Zero runtime dependencies. 42 passing Vitest tests.
 
 ```ts
 import { calculateTax } from "@easytax/tax-engine";
@@ -41,60 +75,75 @@ if (result.status === "ok") {
   console.log(result.income_tax, result.quarterly);
 } else {
   // requires_accountant — mid-year profile change, etc.
-  console.log(result.reason);
 }
 ```
 
-### What it computes
+What it computes:
 
-1. Sums gross income from invoices (already converted to BGN at the BNB rate
-   locked at extraction time).
-2. Applies the 25% normative expense deduction for liberal professions.
-3. Calculates **residual** social security based on the user's insurance
-   profile (full self-employed / EOOD director / employed primary / civil
-   contract only). Caps the base at the annual legal maximum and at actual
-   freelance income.
+1. Sums gross income from invoices (already in BGN at locked BNB rates).
+2. Applies the 25% normative expense deduction.
+3. Computes **residual** social security based on insurance profile (4 types).
 4. Applies the 10% flat income tax on the final taxable base.
 5. Splits into Q1, Q2, Q3 advance payments + Q4 final reconciliation.
 6. Emits a VAT proximity warning at ≥80% of the registration threshold.
 
-### What it refuses to compute
-
-Mid-year profile changes (`profile_valid_from` set) return
-`{ status: "requires_accountant", reason: "..." }` instead of guessing. The
-UI surfaces this and points users to a qualified accountant.
+What it refuses to compute: mid-year profile changes return
+`{ status: "requires_accountant" }` with a human-readable reason.
 
 ### Tax constants — single source of truth
 
-Each year has one file: `packages/tax-engine/src/constants/{year}.ts`. Adding
-a new year = add a file + register it in `constants/index.ts`. Logic never
+One file per year at `packages/tax-engine/src/constants/{year}.ts`. Adding a
+new year = add a file + register it in `constants/index.ts`. Logic never
 hardcodes rates.
 
-Currently configured: **2024**, **2025**.
+Configured: **2024** (authoritative), **2025** (seeded, marked `// TODO: verify`).
 
-> 2025 figures are seeded with best-available public data and marked
-> `// TODO: verify` until cross-checked against the published Budget Act.
+## Phase 2 — Web app
 
-### Running tests
+- `/` — public landing; redirects authed users to `/dashboard` or `/onboarding`
+- `/login`, `/register` — Supabase Auth (email + password)
+- `/onboarding` — 4-step wizard: profile type → profile-specific fields → personal details (incl. EGN) → tax year
+- `/dashboard` — Server Component pulls invoices + profile + user, runs the tax engine, renders:
+  - top stats (gross, tax, SS, effective rate)
+  - VAT proximity bar (visible when ≥50%, warning at ≥80%)
+  - full breakdown panel (gross → normative → SS → final base → tax)
+  - quarterly advance + Q4 reconciliation
+  - next-deadline countdown
+- `/invoices` — table view; AI upload arrives in Phase 3
 
-```bash
-pnpm install
-pnpm --filter @easytax/tax-engine test
-pnpm --filter @easytax/tax-engine test:coverage
-```
+### Auth & RLS
 
-Coverage thresholds: 95% statements / 90% branches / 100% functions / 95% lines.
+- `@supabase/ssr` for cookie-based sessions (server + browser + middleware)
+- `middleware.ts` refreshes the session on every request and redirects
+  unauthenticated users away from app routes
+- Every Supabase table has RLS enabled and policies that strictly require
+  `auth.uid() = user_id`. See `supabase/migrations/20250101000002_rls_policies.sql`.
 
-## Roadmap
+## Phase 3+ Roadmap
 
 | Phase | Scope |
 |-------|-------|
 | 1 ✅ | `tax-engine` + tests |
-| 2 | Next.js scaffold, Supabase schema + RLS, auth, onboarding wizard |
-| 3 | Invoice CRUD, AI extraction (Claude vision), BNB rate fetcher |
-| 4 | Tax calculator UI, dashboard, calendar |
-| 5 | NRA XML generation + XSD validation, PDF preview, document delivery |
-| 6 | Hardening: GDPR delete endpoint, EGN AES-256-GCM encryption, signed storage URLs |
+| 2 ✅ | Next.js, Supabase schema + RLS, auth, onboarding, dashboard, basic invoices |
+| 3 | AI invoice extraction (Claude vision), BNB rate fetcher with daily cache, review-before-save flow, signed-URL storage |
+| 4 | NRA Declaration Art. 50 XML + XSD validation, PDF preview, documents UI, calendar UI |
+| 5 | Email reminders (Resend), GDPR delete endpoint |
+| 6 | Hardening: AES-256-GCM EGN encryption (currently stored plain — flagged TODO in `app/api/profile/route.ts`), secret rotation, audit logs |
+
+## Known gaps before production
+
+- **EGN is stored plaintext.** TODO in `apps/web/app/api/profile/route.ts`.
+  Phase 6 wires AES-256-GCM with `EGN_ENCRYPTION_KEY` from env.
+- **2025 constants** are seeded with best-available public figures. Verify
+  before any production filing.
+- **2024 VAT threshold** in spec was 166,000 BGN; the actual 2024 threshold
+  was 100,000 BGN before the Jan-2025 increase. Fix in `constants/2024.ts`
+  if you need historically accurate 2024 behavior.
+- **Sickness/maternity rate** is applied to all four profiles uniformly per
+  the literal spec. For `employed_primary` it is normally already covered
+  by the employer — adjust in `social-security.ts` if needed.
+- **No NRA XSD** yet at `docs/nra-schemas/`. Phase 4 needs the official XSD
+  file dropped in to wire up validation.
 
 ## Disclaimer
 

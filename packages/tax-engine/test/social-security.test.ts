@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { calculateResidualSocialSecurity } from "../src/social-security.js";
-import { getTaxConstants } from "../src/constants/index.js";
-import { profile } from "./helpers.js";
+import { calculateResidualSocialSecurity } from "../src/social-security";
+import { getTaxConstants } from "../src/constants/index";
+import { profile } from "./helpers";
 
 const YEAR = 2024;
 const C = getTaxConstants(YEAR);

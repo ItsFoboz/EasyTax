@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { calculateTax } from "../src/calculate-tax.js";
-import { getTaxConstants } from "../src/constants/index.js";
-import { evenMonthlyInvoices, profile } from "./helpers.js";
+import { calculateTax } from "../src/calculate-tax";
+import { getTaxConstants } from "../src/constants/index";
+import { evenMonthlyInvoices, profile } from "./helpers";
 
 const C2024 = getTaxConstants(2024);
 

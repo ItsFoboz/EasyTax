@@ -1,6 +1,6 @@
-import { constants2024 } from "./2024.js";
-import { constants2025 } from "./2025.js";
-import type { TaxConstants } from "./schema.js";
+import { constants2024 } from "./2024";
+import { constants2025 } from "./2025";
+import type { TaxConstants } from "./schema";
 
 const TABLE: Record<number, TaxConstants> = {
   2024: constants2024,
@@ -30,4 +30,4 @@ export function listSupportedYears(): number[] {
     .sort((a, b) => a - b);
 }
 
-export type { TaxConstants } from "./schema.js";
+export type { TaxConstants } from "./schema";

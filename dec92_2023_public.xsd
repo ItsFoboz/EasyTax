@@ -1,0 +1,2668 @@
+<?xml version="1.0" encoding="WINDOWS-1251"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="dec92">
+		<xs:annotation>
+			<xs:documentation> чл. 92 от ЗКПО за данъчния финансов резултат и дължимия годишен корпоративен данък</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all minOccurs="0">
+				<xs:element name="part13">
+					<xs:annotation>
+						<xs:documentation>Данни за задълженото лице (ЧастI, ЧастII,ЧастIII )</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="part1">
+								<xs:annotation>
+									<xs:documentation>Част І – Данни за декларацията</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="decyear">
+											<xs:annotation>
+												<xs:documentation>Данъчна година </xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="4"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="iscalyear" type="xs:boolean">
+											<xs:annotation>
+												<xs:documentation>За календарната година - на основание чл.92, ал.1 от ЗКПО</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="istax" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>За данъка върху разходите – на основание чл.217 от ЗКПО</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="isterminate75" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>На основание чл. 75, ал. 3 от ЗКПО (еднократно след срока за подаване)</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="part2">
+								<xs:annotation>
+									<xs:documentation>Част ІI - Идентификационни данни за данъчно задълженото лице</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="bulstat" type="bulstat">
+											<xs:annotation>
+												<xs:documentation>ЕИК по ЗТРРЮЛНЦ/ЕИК по БУЛСТАТ</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="regfullname">
+											<xs:annotation>
+												<xs:documentation>Наименование  </xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="200"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="isforeign" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Чуждестранно лице</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="foreignname" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Наименование на чуждестранното лице</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="200"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="isnofin" type="xs:boolean">
+											<xs:annotation>
+												<xs:documentation>Нефинансово предприятие</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="isfin" type="xs:boolean">
+											<xs:annotation>
+												<xs:documentation>Финансова институция</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="isinsurer" type="xs:boolean">
+											<xs:annotation>
+												<xs:documentation>Застраховател</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="isassoc" type="xs:boolean">
+											<xs:annotation>
+												<xs:documentation>Неперсонифицирано дружество или осигурителна каса</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="isjuridical" type="xs:boolean">
+											<xs:annotation>
+												<xs:documentation>Юридическо лице с нестопанска цел </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ishybrid" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Хибридно образувание по чл. 2, ал. 4 от ЗКПО</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="officeaddress" type="address" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Адрес за кореспонденция</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="pjurpersons" id="P2D1">
+											<xs:annotation>
+												<xs:documentation>Данни за представляващия</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="rowenum" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:all>
+																<xs:element name="name">
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:maxLength value="200"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:element>
+																<xs:element name="egn" type="egn"/>
+															</xs:all>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="acountantperson" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Данни за съставителя на
+годишния финансов отчет: Физическо лице</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:all>
+													<xs:element name="isperson" type="xs:boolean">
+														<xs:annotation>
+															<xs:documentation>Физическо лице</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="name">
+														<xs:annotation>
+															<xs:documentation>Име, презиме, фамилия</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:maxLength value="200"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="egn" type="egn">
+														<xs:annotation>
+															<xs:documentation>ЕГН/ЛН/ЛНЧ/Служебен № от регистъра на НАП</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="isworking" type="xs:boolean" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Вид на правоотношението със съставителя: трудово</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="isobligational" type="xs:boolean" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Вид на правоотношението със съставителя: облигационно, в т.ч. със съдружник, упражняващ личен труд</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:all>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="acountantfirm" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Данни за съставителя на
+годишния финансов отчет: Счетоводно предприятие</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:all>
+													<xs:element name="isfirm" type="xs:boolean">
+														<xs:annotation>
+															<xs:documentation>Счетоводно предприятие</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="name">
+														<xs:annotation>
+															<xs:documentation>Наименование</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:maxLength value="200"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="bulstat" type="bulstat">
+														<xs:annotation>
+															<xs:documentation>ЕИК по ЗТРРЮЛНЦ/ЕИК по БУЛСТАТ</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:all>
+											</xs:complexType>
+										</xs:element>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="part3">
+								<xs:annotation>
+									<xs:documentation>Част ІІІ – Данни за дейността на данъчно задълженото лице </xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="baseactcode">
+											<xs:annotation>
+												<xs:documentation>Код на основната дейност</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:int">
+													<xs:minInclusive value="0"/>
+													<xs:maxInclusive value="99999"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="baseactname" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Основна дейност - наименование</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="200"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="isforeignplace" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Място на стопанска дейност в чужбина</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="isforeignincome" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Получени доходи от източници в чужбина </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="isremise1" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Преотстъпване на корпоративен данък и/или намаление на счетоводния финансов резултат по реда на глава двадесет и втора от ЗКПО</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="isremise2" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Изпълнение на изискването по чл.167, ал.1 от ЗКПО</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="isedict189" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Прилагане на чл. 189 от ЗКПО - държавна помощ за регионално развитие</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="isedict1891" type="xs:boolean">
+											<xs:annotation>
+												<xs:documentation>Дейността, свързана с първоначалната инвестиция, се осъществява в съответната община за период от поне 5 години след годината на завършване на първоначалната инвестиция, свързана с преотстъпен корпоративен данък до 2021 г. включително, съгласно чл. 189, т. 3, б. „в“ от ЗКПО. </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="edict1891" id="P2D3" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Години на завършване на първоначалната инвестиция</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence minOccurs="0">
+													<xs:element name="rowenum" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:all>
+																<xs:element name="edict1891year">
+																	<xs:annotation>
+																		<xs:documentation>Година на завършване на първоначалната инвестиция, по отношение на която е налице задължение за продължаване на дейността за период поне 5 години след годината на завършване на първоначалната инвестиция</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:maxLength value="4"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:element>
+															</xs:all>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="isedict189b" type="xs:boolean">
+											<xs:annotation>
+												<xs:documentation>Дейността по чл. 189б, ал. 1 (производство на непреработена растителна и животинска продукция) продължава да се осъществява за период от поне три години след годината на преотстъпване</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="edict189b" id="P2D4" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Години на преотстъпване на корпоративен данък</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence minOccurs="0">
+													<xs:element name="rowenum" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:all>
+																<xs:element name="edict189byear">
+																	<xs:annotation>
+																		<xs:documentation>Година на преотстъпване на корпоративен данък, по отношение на която е налице задължение за продължаване на дейността за период поне 3 години след годината на преотстъпване </xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:maxLength value="4"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:element>
+															</xs:all>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="part4">
+					<xs:annotation>
+						<xs:documentation>Част ІV – Образци и документи, които се подават заедно с декларацията</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="issetapp1" type="xs:boolean">
+								<xs:annotation>
+									<xs:documentation>Приложение № 1 за ползване на данъчни облекчения под формата на преотстъпване на корпоративен данък или чрез признаване за данъчни цели на счетоводни разходи за дарения или стипендии</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="issetapp2" type="xs:boolean">
+								<xs:annotation>
+									<xs:documentation>Приложение № 2 за печалби (доходи), обложени в чужбина, за които се прилага метод за избягване на двойното данъчно облагане</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="issetapp3" type="xs:boolean">
+								<xs:annotation>
+									<xs:documentation>Приложение № 3 за регулиране на разходите по заеми по реда на чл. 43а от ЗКПО</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="issetapp4" type="xs:boolean">
+								<xs:annotation>
+									<xs:documentation>Приложение № 4 за определяне на временна солидарна вноска за генерираните свръхпечалби</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="issetfinacount" type="xs:boolean">
+								<xs:annotation>
+									<xs:documentation>Годишен отчет за дейността</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="finnum" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Вх. № и дата на годишния отчет за дейността </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="isnoobligation" type="xs:boolean" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Не е налице задължение за подаване на годишен отчет за дейността </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="isdocuments" type="xs:boolean" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Други документи</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="documents" type="xs:int" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>броя на документите</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="part5">
+					<xs:annotation>
+						<xs:documentation>Част V – Определяне на данъчния финансов резултат и дължимия корпоративен данък </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:all minOccurs="0">
+							<xs:element name="result" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>СЧЕТОВОДЕН ФИНАНСОВ РЕЗУЛТАТ </xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:all minOccurs="0">
+										<xs:element name="index0100" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ОБЩО ПРИХОДИ </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index0110" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>в т.ч. нетни приходи от продажби </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index0111" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>в т.ч. нетни приходи от продажби от дейността, подлежаща на облагане с корпоративен данък </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index0200" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ОБЩО РАЗХОДИ </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index0310" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>СЧЕТОВОДЕН ФИНАНСОВ РЕЗУЛТАТ: Счетоводна печалба </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index0320" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>СЧЕТОВОДЕН ФИНАНСОВ РЕЗУЛТАТ: Счетоводна загуба</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index0400" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Общо приходи, които се изключват при определяне на счетоводния финансов резултат за данъчно преобразуване  </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index0500" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Общо разходи, които се изключват при определяне на счетоводния финансов резултат за данъчно преобразуване  </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index0610" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>СЧЕТОВОДЕН ФИНАНСОВ РЕЗУЛТАТ ЗА ДАНЪЧНО ПРЕОБРАЗУВАНЕ: ПОЛОЖИТЕЛЕН</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index0620" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>СЧЕТОВОДЕН ФИНАНСОВ РЕЗУЛТАТ ЗА ДАНЪЧНО ПРЕОБРАЗУВАНЕ: ОТРИЦАТЕЛЕН</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="reform" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>ПРЕОБРАЗУВАНЕ НА СЧЕТОВОДНИЯ ФИНАНСОВ РЕЗУЛТАТ </xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:all minOccurs="0">
+										<xs:element name="index7010" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Годишни счетоводни разходи за амортизации (чл. 54, ал. 2) </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7020" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Счетоводна балансова стойност на отписаните активи от счетоводния амортизационен план </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7030" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Разходи от последващи оценки на активи и пасиви </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7031" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>разходи от последващи оценки и от отписване на вземания като несъбираеми  </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7040" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Признаване за данъчни цели на непризнати приходи от последващи оценки на активи и пасиви </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7050" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Разходи, представляващи доходи на местни физически лица по ЗДДФЛ и разходи за задължителни осигурителни вноски, свързани с тях  </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7060" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Разходи за лихви от прилагане на режима на слаба капитализация </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7070" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Превишение на разходите по заеми, непризнато за данъчни цели </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7080" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Разходи от липси и брак съгласно чл. 28, в т. ч.:</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7081" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>разходи от липси на дълготрайни и краткотрайни активи с изключение на материални запаси </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7082" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>разходи от липси и брак на материални запаси </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7083" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>разход за ДДС  съгласно чл. 28, ал. 4</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7084" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>последващи разходи, отчетени по повод на вземане, възникнало в резултат на непризнати липси и брак на активи</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7090" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Разходи, непризнати за данъчни цели съгласно чл. 26, т. 1, 2 и 6, в т. ч.:</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7091" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>разходи, несвързани с дейността и/или които не са документално обосновани </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7092" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>разходи за начислени глоби, конфискации, санкции и лихви за просрочие </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7100" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Сума на задълженията</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7110" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Счетоводно отчетени разходи/загуби по чл. 11а, в т.ч.:</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7111" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>във връзка с договори за оперативен лизинг, съгласно МСС, при лизингополучатели </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7112" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>във връзка с договори за продажба с обратен лизинг, класифициран като оперативен лизинг, съгласно МСС, при продавачи лизингополучатели </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7120" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Приходи/печалби по чл. 11а, определени по правилата на СС 17 "Лизинг", в т.ч.: </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7121" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>по отношение на експлоатационния лизинг, приложени към договори за оперативен лизинг </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7122" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>по отношение на договори за продажба с обратен лизинг, класифициран като експлоатационен лизинг, приложени към договори за продажба с обратен лизинг, класифициран като оперативен лизинг, при продавачи лизингополучатели, прилагащи МСС </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7130" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Счетоводни разходи за изграждане или подобрение на елементи на техническа инфраструктура - публична държавна или публична общинска собственост при условията на чл.69а </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7140" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Разходи и суми, с които се увеличава счетоводният финансов резултат в случаите на хибридни несъответствия и на несъответствия с данъчно задължено лице, което е местно лице за данъчни цели на повече от една юрисдикция </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7141" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>по чл. 47ж, т. 1</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7142" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>по чл. 47ж, т. 2</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7143" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>по чл. 47ж, т. 3</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7144" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>по чл. 47з</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7145" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>по чл. 47к</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7150" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Положителна разлика между пазарната цена и стойността за данъчни цели на трансферирания актив към момента на трансфера   </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7160" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Положителна разлика между пазарната цена на трансферираната дейност и стойността за данъчни цели на трансферираните активи, намалена със стойността за данъчни цели на трансферираните пасиви към момента на трансфера                       </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7170" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Превишение на пазарната цена на услугата към момента на трансфера над себестойността и в случаите по </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7180" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Отрицателна разлика между пазарната цена на услугата към момента на трансфера и отчетения разход или този, който ще бъде отчетен във връзка с услугата </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7190" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Положителна разлика между сумата на отчетения разход или този, който ще бъде отчетен във връзка с услугата, и себестойността на услугата </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7200" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Счетоводни разходи или загуби в случаите по чл. 157 </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index7210" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Други увеличения на счетоводния финансов резултат </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8010" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Годишни данъчни амортизации </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8020" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Данъчна стойност на отписаните активи от данъчния амортизационен план</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8030" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Приходи от последващи оценки на активи и пасиви </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8031" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>приходи от последващи оценки на вземания  </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8040" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Признаване за данъчни цели на непризнати разходи от последващи оценки на активи и пасиви </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8041" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>от последващи оценки и от отписване на вземания </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8050" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Признаване за данъчни цели на непризнати разходи по чл. 42, ал. 1, 5 и 8 </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8060" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Приходи/сума, с която са намалени счетоводните разходи, отчетени по повод на задължения за неизплатени доходи по чл. 42, ал. 1 и на задължения за невнесени задължителни осигурителни вноски по чл. 42, ал. 5</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8070" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Признаване за данъчни цели на непризнати разходи за лихви от прилагане на режима на слаба капитализация </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8080" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Признаване за данъчни цели на непризнато превишение на разходите по заеми </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8090" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Приходи, възникнали по повод на непризнати по чл. 28 липси и брак на активи </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8100" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Приходи, възникнали по повод на непризнати за данъчни цели разходи по чл. 26, т. 6 </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8110" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Сума на погасените задължения, за които е приложен чл.46, ал.1 през предходна година </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8120" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Приходи, отчетени по повод  отписване на задължения, за които е приложен чл.46, ал.1 през предходна година</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8130" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Разходи/загуби по чл. 11а, определени по правилата на СС 17 "Лизинг", в т.ч.: </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8131" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>по отношение на експлоатационния (оперативния) лизинг, приложени към договори за оперативен лизинг при лизингополучатели, прилагащи МСС </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8132" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>по отношение на договори за продажба с обратен лизинг, класифициран като експлоатационен лизинг, приложени към договори за продажба с обратен лизинг, класифициран като оперативен лизинг, при продавачи лизингополучатели, прилагащи МСС </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8140" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Счетоводно отчетени приходи/печалби по чл. 11а, в т. ч.: </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8141" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>във връзка с договори за оперативен лизинг, съгласно МСС, при лизингополучатели </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8142" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>във връзка с договори за продажба с обратен лизинг, класифициран като оперативен лизинг, съгласно МСС, при продавачи лизингополучатели </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8230" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ред 15: Разходи и суми, с които се намалява счетоводният финансов резултат, свързани с двойно включен доход, с които е увеличен счетоводният финансов резултат в минал данъчен период </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8150" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ред 16: Отрицателна разлика между пазарната цена и стойността за данъчни цели на трансферирания актив към момента на трансфера </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8160" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ред 17: Отрицателна разлика между пазарната цена на трансферираната дейност и стойността за данъчни цели на трансферираните активи, намалена със стойността за данъчни цели на трансферираните пасиви към момента на трансфера </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8170" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ред 18: Превишение на себестойността на услугата над пазарната и цена към момента на трансфера в случаите по чл. 156 </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8180" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ред 19: Положителна разлика между пазарната цена на услугата към момента на трансфера и отчетения разход или този, който ще бъде отчетен във връзка с услугата </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8190" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ред 20: Отрицателна разлика между сумата на отчетения разход или този, който ще бъде отчетен във връзка с услугата, и себестойността на услугата       </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8200" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ред 21: Счетоводни приходи или печалби в случаите по чл. 157 </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8210" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ред 22: Приспадане на данъчна загуба, в т.ч.: </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8211" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ред 22.1: данъчна загуба от източник в страната </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8212" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ред 22.2: данъчна загуба от източник в чужбина при прилагане на метода „освобождаване с прогресия</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8213" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ред 22.3 : данъчна загуба от източник в чужбина при прилагане на метода „данъчен кредит” </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index8220" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ред 23 : Други намаления на счетоводния финансов резултат</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index0700" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ВСИЧКО УВЕЛИЧЕНИЯ </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index0800" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ВСИЧКО НАМАЛЕНИЯ </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index0900" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ДАНЪЧНА ПЕЧАЛБА на чуждестранно образувание, която не е разпределена и/или печалба, реализирана от място на стопанска дейност в чужбина в случаите на контролирано чуждестранно дружество   </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index1000" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ДАНЪЧНА ПЕЧАЛБА на чуждестранно образувание, с която е увеличен данъчният финансов резултат за минала година на основание на чл. 47г, ал. 1 -  намалението е до размера на разпределената през текущата година печалба </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index1100" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ПЕЧАЛБА от чуждестранно образувание, с която е увеличен данъчният финансов резултат за минала година и за която не е приложен чл. 47г, ал. 4, когато е реализиран приход, който подлежи на облагане, от разпореждане с участие в чуждестранно образувание или със стопанска дейност, извършвана чрез място на стопанска дейност в чужбина – намалението е до размера на прихода от разпореждането </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index1210" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ДАНЪЧНА ПЕЧАЛБА </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index1210a" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ДАНЪЧНА ПЕЧАЛБА в случаите по § 9 от ПЗР на ЗИДЗКПО </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index1220" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ДАНЪЧНА ЗАГУБА</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index1300" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ДАНЪЧНА СТАВКА</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index1400" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ПОЛАГАЩ СЕ КОРПОРАТИВЕН ДАНЪК </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index1500" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ПОЛАГАЩ СЕ КОРПОРАТИВЕН ДАНЪК при прилагане на методи за избягване на двойно данъчно облагане  </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index1600" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ПРЕОТСТЪПЕН КОРПОРАТИВЕН ДАНЪК  </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index1700" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ГОДИШЕН КОРПОРАТИВЕН ДАНЪК след преотстъпването   </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index1800" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>НАПРАВЕНИ АВАНСОВИ ВНОСКИ ЗА ГОДИНАТА </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index1910" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>РАЗЛИКА ЗА ВНАСЯНЕ </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index1920" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>НАДВНЕСЕН ДАНЪК </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="isindex2010" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Възстановяване по реда на чл. 128 – чл. 130 от ДОПК </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="bulstat" type="bulstat" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ЕИК по ЗТРРЮЛНЦ/БУЛСТАТ</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="bankname" type="xs:string" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Банка</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="bankiban" type="iban" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>IBAN</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="banbic" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>BIC</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="cell">
+													<xs:minLength value="0"/>
+													<xs:maxLength value="11"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="isindex2020" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Използване на надвнесения данък за погасяване на налични или бъдещи задължения по реда на чл. 130а от ДОПК </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index2021" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ОБЩ РАЗМЕР НА НАДВНЕСЕНАТА СУМА </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index20221" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Данъци и други приходи за централния бюджет</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index20222" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Осигурителни вноски ДОО</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index20223" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Осигурителни вноски НЗОК </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index20224" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Осигурителни вноски и свързани с тях наказателни лихви за ДЗПО</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index20225" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Принудително събиране на публични вземания</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="isindex2100t1" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Обстоятелство по чл. 155г, ал. 1, т. 1 от ЗКПО</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="isindex2100t2" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Обстоятелство по чл. 155г, ал. 1, т. 2 от ЗКПО</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="isindex2100t3" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Обстоятелство по чл. 155г, ал. 1, т. 3 от ЗКПО</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="isindex2100t4" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Обстоятелство по чл. 155г, ал. 1, т. 4 от ЗКПО</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index2200" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Превишението на увеличенията над намаленията по чл. 155а, ал. 1 за трансферираните активи, за които е приложено разсрочване		</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index2300" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Превишението на увеличенията над намаленията по чл. 155б, ал. 1 за трансферираните дейности, за които е приложено разсрочване</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index2400" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Сбор от превишенията</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index2500" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Част от корпоративния данък, подлежаща на разсрочване съгласно чл. 155г, ал. 1</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index25101year" type="xs:string" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ред 25.1 година на I вноска </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index25101" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>I вноска</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index25102year" type="xs:string" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ред 25.1 година на II вноска</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index25102" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>II вноска</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index25103year" type="xs:string" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ред 25.1 година на III вноска</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index25103" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>III вноска</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index25104year" type="xs:string" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ред 25.1 година на IV вноска</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index25104" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>IV вноска</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index25105year" type="xs:string" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ред 25.1 година на V вноска</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index25105" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>V вноска</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="isindex2610" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Месечни – съгласно чл. 84 от ЗКПО -ДА/НЕ</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index2610" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Месечни – съгласно чл. 84 от ЗКПО</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="isindex2620" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Тримесечни – съгласно чл. 85 от ЗКПО    - ДА/НЕ</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index2620" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Тримесечни – съгласно чл. 85 от ЗКПО    </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="isindex2630" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Тримесечни – съгласно    чл. 118 или чл. 147 от ЗКПО - ДА/НЕ</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index2630date" type="xs:date" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Дата, на която изтича срокът за внасяне на първата тримесечна авансова вноска след преобразуването</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index2630" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Тримесечни – съгласно    чл. 118 или чл. 147 от ЗКПО </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="isindex2640" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Тримесечни – съгласно чл. 83, ал. 3 от ЗКПО</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="isindex2650" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Данъчно задълженото лице не е задължено да извършва авансови вноски и не е приложило чл. 83, ал. 3 от ЗКПО  </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index2710" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>За месечни авансови вноски</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="index2720" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>За тримесечни авансови вноски</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="part6" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Част VІ – Деклариране на взаимоотношения със свързани лица </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:all minOccurs="0">
+							<xs:element name="totalincome" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Общ размер на счетоводните приходи от взаимоотношения със свързани лица, в т.ч.: </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="prefincome" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation> - с лица от юрисдикции с преференциален данъчен режим</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="totalexpenses" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Общ размер на счетоводните разходи от взаимоотношения със свързани лица, в т.ч.: </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="prefexpenses" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>- с лица от юрисдикции с преференциален данъчен режим</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="totaldebit" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Вземания от свързани лица – салдо (остатък) към 31 декември на съответната година, в т.ч.:</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="prefdebit" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>- от лица от юрисдикции с преференциален данъчен режим</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="totalcredit" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Задължения към свързани лица – салдо (остатък) към 31 декември на съответната година, в т.ч.:</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="prefcredit" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>- към лица от юрисдикции с преференциален данъчен режим</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="part7" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Част VІІ – Деклариране на извършено скрито разпределение на печалбата</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:all minOccurs="0">
+							<xs:element name="total" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Общ размер на сумите, представляващи скрито разпределение на печалбата</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="part8" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Част VІІІ – Данък върху разходите</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:all minOccurs="0">
+							<xs:element name="index1" type="typepart8" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>По чл. 204, ал. 1, т. 1 - представителни разходи</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="index2" type="typepart8" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>По чл. 204, ал. 1, т. 2 - социални разходи, предоставени в натура </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="index3" type="typepart8" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>По чл. 204, ал. 1, т. 4 – разходи в натура, свързани с предоставени за лично ползване активи и/или с използване на персонал</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="part9" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Част ІХ – Деклариране на направен избор за облагане на доходите в натура, представляващи разходи в натура</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:all minOccurs="0">
+							<xs:element name="yearrow1" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>година на данъчната декларация + 1 : 1. Избор за облагане по реда на ЗКПО за </xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:integer">
+										<xs:totalDigits value="4"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="isrow1" type="xs:boolean" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>1. Избор за облагане по реда на ЗКПО</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="yearrow2" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>година на данъчната декларация : 2. Избор за облагане по реда на ЗКПО</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:integer">
+										<xs:totalDigits value="4"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="isrow2" type="xs:boolean" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>2. Избор за облагане по реда на ЗКПО</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="part10" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Част Х – Идентификационни данни за собствениците, акционерите или съдружниците в чуждестранно юридическо лице, извършващо стопанска дейност в страната чрез място на стопанска дейност</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:all minOccurs="0">
+							<xs:element name="table" type="shareholderType" id="P10D1" minOccurs="0"/>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="part11" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Част ХІ – Регулиране на слабата капитализация </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:all minOccurs="0">
+							<xs:element name="is43a" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Част А. ПРИЛАГАНЕ ПРЕЗ ТЕКУЩАТА ГОДИНА НА ПРАВИЛОТО ЗА ОГРАНИЧАВАНЕ ПРИСПАДАНЕТО НА ЛИХВИ ПО ЧЛ. 43А ОТ ЗКПО</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:maxLength value="2"/>
+										<xs:enumeration value="Да"/>
+										<xs:enumeration value="Не"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="row1" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>СФР (счетоводен финансов резултат)</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="row2" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>ПЛ (общ размер на приходите от лихви)</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="row3" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>РЛ (общ размер на разходите за лихви</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="row4" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>ФРПЛ (счетоводен финансов резултат без влиянието на всички приходи и разходи от лихви)</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="row5" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Разходи за лихви, подлежащи на регулация, посочени в чл. 43, ал. 4 от ЗКПО</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="row6" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>чл. 43, ал. 5 от ЗКПО </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="row71" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>НРЛ (непризнати разходи за лихви) </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="row72" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>ПРЛ (признати разходи за лихви)</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="row8" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Непризнати съгласно чл.43, ал.1 от ЗКПО разходи за лихви </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="row9" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>В случай че са попълнени ред 7.2 и ред 8, на този ред се записва сумата от ред 7.2, ограничена  до размера на сумата по ред 8 </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="part12" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Част ХІI – Прилагане на трансгранични данъчни схеми</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:all minOccurs="0">
+							<xs:element name="istrans" type="xs:boolean" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>През годината е прилагана трансгранична данъчна схема по смисъла на чл. 143я, ал. 4 от ДОПК.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="transuins" id="P12D1" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Уникален номер на трансграничната данъчната схема</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence minOccurs="0">
+										<xs:element name="rowenum" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:all minOccurs="0">
+													<xs:element name="uin" minOccurs="0">
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:maxLength value="200"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+												</xs:all>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="app1" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Приложение № 1
+за ползване на данъчни облекчения под формата на преотстъпване на корпоративен данък или чрез признаване за данъчни цели на счетоводни разходи за дарения или стипендии</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:all minOccurs="0">
+							<xs:element name="part1" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Част І – Преотстъпване на корпоративен данък</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:all minOccurs="0">
+										<xs:element name="decreasetax" id="A1D1" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>СПРАВКА 1 – Деклариране на поредността на преотстъпване на корпоративен данък</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence minOccurs="0">
+													<xs:element name="code01" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>2. Код : 1 </xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:enumeration value="01"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="value01" type="xs:float" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>3. Размер на преотстъпения данък по съответното основание :1</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="code02" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>2. Код : 2</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:enumeration value="02"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="value02" type="xs:float" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>3. Размер на преотстъпения данък по съответното основание:2</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="code03" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>2. Код : 3 </xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:enumeration value="03"/>
+																<xs:enumeration value="04"/>
+																<xs:enumeration value="05"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="value03" type="xs:float" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>3. Размер на преотстъпения данък по съответното основание:3</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="rowenum" minOccurs="0" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Място на извършване на дейността, за която се ползва преотстъпване по код 03 или 04 и размер на преотстъпения данък</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:all minOccurs="0">
+																<xs:element name="region" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Област</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:maxLength value="200"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:element>
+																<xs:element name="municipality" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Община</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:maxLength value="200"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:element>
+																<xs:element name="city" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Населено място</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:maxLength value="200"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:element>
+																<xs:element name="value0304" type="xs:float" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Размер на преотстъпения данък</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:all>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="ref2" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>СПРАВКА 2 – Минимални помощи</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:all minOccurs="0">
+													<xs:element name="isindex1" type="xs:boolean" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>През последните три години, включително текущата, сумата на получените от данъчно задълженото лице/данъчно задълженото лице, представляващо едно и също предприятие, минимални помощи по Регламент 1407/2013 ...</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="isindex2" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Получена минимална помощ през последните три години от данъчно задълженото лице/данъчно задълженото лице, представляващо едно и също предприятие, предоставена съгласно Регламент (ЕС) № 360/2012 на Комисията</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="0"/>
+																<xs:maxLength value="3"/>
+																<xs:enumeration value="Да"/>
+																<xs:enumeration value="Не"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="isindex21" type="xs:boolean" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>В случай на даден положителен отговор на ред 2, общият размер на получената минимална помощ, в т.ч. корпоративният данък, който ще бъде преотстъпен през текущата година, от данъчно задълженото лице/данъчно задълженото лице, представляващо едно и също предприятие, не надхвърля левовата равностойност на 500 000 евро през последните три години, включително текущата.</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="isindex3" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Към 31 декември на съответната година данъчно задълженото лице представлява едно и също предприятие</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="0"/>
+																<xs:maxLength value="3"/>
+																<xs:enumeration value="Да"/>
+																<xs:enumeration value="Не"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="index4" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Размер на помощта, в т.ч. корпоративният данък, който ще бъде преотстъпен през текущата година, за последните три години, включително текущата, предоставяна на предприятие, което не представлява едно и също предприятие, която следва да се вземе предвид за целите на чл. 188, ал. 1 от ЗКПО</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:all minOccurs="0">
+																<xs:element name="year1" type="typeapp1ref2help" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Х-2 г.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="year2" type="typeapp1ref2help" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Х-1 г.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="year3" type="typeapp1ref2help" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Х г.</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="sum" type="typeapp1ref2help" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Общо</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:all>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="isindex5" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Данъчно задълженото лице – декларатор е първото подало годишна данъчна декларация данъчно задължено лице</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="0"/>
+																<xs:maxLength value="3"/>
+																<xs:enumeration value="Да"/>
+																<xs:enumeration value="Не"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="index51" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Данни за данъчно задълженото лице, което първо е подало годишната данъчна декларация </xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:all minOccurs="0">
+																<xs:element name="bulstat" type="bulstat" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>ЕИК</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="name" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Наименование</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:maxLength value="200"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:element>
+															</xs:all>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="index52" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Данни за данъчно задълженото лице, което първо е подало годишната данъчна декларация </xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:all minOccurs="0">
+																<xs:element name="year1" id="A1D2" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Х-2 г.</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:sequence minOccurs="0">
+																			<xs:element name="rowenum" type="typeapp1ref2company" minOccurs="0" maxOccurs="unbounded"/>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+																<xs:element name="year2" id="A1D3" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Х-1 г.</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:sequence minOccurs="0">
+																			<xs:element name="rowenum" type="typeapp1ref2company" minOccurs="0" maxOccurs="unbounded"/>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+																<xs:element name="year3" id="A1D4" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Х г.</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:sequence minOccurs="0">
+																			<xs:element name="rowenum" type="typeapp1ref2company" minOccurs="0" maxOccurs="unbounded"/>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+															</xs:all>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="sum1407auto" type="xs:float" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Общо за Регламент 1407/2013 - автомобилни товарни превози </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="sum1407other" type="xs:float" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Общо за Регламент 1407/2013 - други дейности </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="sumother" type="xs:float" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Общо за Други регламенти за минимална помощ </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="sum360" type="xs:float" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>бщо за Регламент 360/2012</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:all>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="ref3" id="A1D5" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>СПРАВКА 3 – Държавна помощ за регионално развитие</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence minOccurs="0">
+													<xs:element name="rowenum" minOccurs="0" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:all minOccurs="0">
+																<xs:element name="isedict189" type="xs:boolean" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Прилагане на разпоредбата на чл. 189 от ЗКПО</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="orderdoc" type="xs:string" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Заповед от Българска агенция за инвестиции - поле номер</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="orderdate" type="xs:date" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Заповед от Българска агенция за инвестиции - поле дата</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="maxvalue" type="xs:float" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Максимален размер на помощта</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="percent" type="xs:float" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Интензитет на помощта</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="term1" type="xs:boolean" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Срок на помощта : данъчната година</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="term2" type="xs:boolean" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Срок на помощта : данъчната година + 1</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="term3" type="xs:boolean" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Срок на помощта : данъчната година + 2</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="term4" type="xs:boolean" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Срок на помощта : данъчната година + 3</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="term5" type="xs:boolean" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Срок на помощта : данъчната година + 4</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="expenses" type="xs:float" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Прогнозен размер на приемливите разходи за първоначалната инвестиция</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="actives" type="xs:float" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Стойност на придобитите през данъчния период материални и нематериални активи, които са част от проекта за първоначална инвестиция</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="datefrom" type="xs:date" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Период на извършване на първоначалната инвестиция, в която е инвестиран преотстъпеният данък за текущата година и за която е налице заповед - от дата</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="dateto" type="xs:date" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Период на извършване на първоначалната инвестиция, в която е инвестиран преотстъпеният данък за текущата година и за която е налице заповед  - до дата</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="workplaces" id="A1D5_1" minOccurs="0">
+																	<xs:annotation>
+																		<xs:documentation>Създадени през данъчния период работни места във връзка с първоначалната инвестиция</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:sequence minOccurs="0">
+																			<xs:element name="rowenum" minOccurs="0" maxOccurs="unbounded">
+																				<xs:complexType>
+																					<xs:all minOccurs="0">
+																						<xs:element name="code" minOccurs="0">
+																							<xs:annotation>
+																								<xs:documentation>Код</xs:documentation>
+																							</xs:annotation>
+																							<xs:simpleType>
+																								<xs:restriction base="xs:string">
+																									<xs:maxLength value="50"/>
+																								</xs:restriction>
+																							</xs:simpleType>
+																						</xs:element>
+																						<xs:element name="name" minOccurs="0">
+																							<xs:annotation>
+																								<xs:documentation>Наименование</xs:documentation>
+																							</xs:annotation>
+																							<xs:simpleType>
+																								<xs:restriction base="xs:string">
+																									<xs:maxLength value="200"/>
+																								</xs:restriction>
+																							</xs:simpleType>
+																						</xs:element>
+																						<xs:element name="count" type="xs:integer" minOccurs="0">
+																							<xs:annotation>
+																								<xs:documentation>Брой работни места</xs:documentation>
+																							</xs:annotation>
+																						</xs:element>
+																					</xs:all>
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+															</xs:all>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="ref4" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>СПРАВКА 4 – Данъчно облекчение за големи инвестиционни проекти</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:all>
+													<xs:element name="isduty189" type="xs:boolean" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Наличие на задължение за прилагане на чл.189, т. 4, б. „а" от ЗКПО</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="decisiondoc" type="xs:string" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Получено е положително решение от
+Европейската комисия по реда и при условията на
+Закона за държавните помощи - номер</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="decisiondate" type="xs:date" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Получено е положително решение от
+Европейската комисия по реда и при условията на
+Закона за държавните помощи - дата</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:all>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="ref5" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>СПРАВКА 5 – Данъчно облекчение за земеделски стопани</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:all minOccurs="0">
+													<xs:element name="isindex1" type="xs:boolean" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Към датата на предоставяне на помощта (31 декември на съответната година) данъчно задълженото лице не е голямо предприятие по смисъла на § 1, т. 74 от ДР на ЗКПО</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="isindex2" type="xs:boolean" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>За активите, в които следва да се инвестира преотстъпеният данък, земеделският стопанин не е получател по някоя от помощите, посочени в чл. 189б, ал. 2, т. 9 от ЗКПО </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:all>
+											</xs:complexType>
+										</xs:element>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="part2" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Част ІІ – Признаване за данъчни цели на счетоводни разходи за дарения</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:all minOccurs="0">
+										<xs:element name="donation1" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Размер на направените през годината дарения в полза на лица с код 01</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="allowedexpense1" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Допустим размер на разходите за дарения съгласно чл.31, ал.1 в полза на лица с код 01</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="donation2" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Размер на направените през годината дарения в полза на лица с код 02</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="allowedexpense2" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Допустим размер на разходите за дарения съгласно чл.31, ал.2 в полза на лица с код 02</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="donation3" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Размер на направените през годината дарения в полза на лица с код 03</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="allowedexpense3" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Допустим размер на разходите за дарения съгласно чл.31, ал.3 в полза на лица с код 03</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="donation4" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Размер на направените през годината дарения в полза на лица с код 04</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="allowedexpense5" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Допустим размер на разходите за дарения съгласно чл.31, ал.5 </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="part3" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Част ІІІ – Признаване за данъчни цели на счетоводни разходи за стипендии</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:all minOccurs="0">
+										<xs:element name="grantsexpenses" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Размер на признатите за данъчни цели за годината счетоводни разходи за стипендии по реда на чл. 177а, ал. 1 от ЗКПО</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="students" type="xs:integer" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Брой ученици/студенти, в полза на които са извършени разходите за стипендии</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="app2" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Приложение № 2
+за печалби (доходи), обложени в чужбина, за  които се прилага  метод за избягване на двойното данъчно облагане </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:all minOccurs="0">
+							<xs:element name="profit" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Данъчна печалба </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="loss" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Данъчна загуба</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="profitprogression" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>ДАНЪЧНА ПЕЧАЛБА ЗА ОПРЕДЕЛЯНЕ РАЗМЕРА НА КОРПОРАТИВНИЯ ДАНЪК при прилагане на метода ”Освобождаване с прогресия”</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="taxprogression" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>ПОЛАГАЩ СЕ КОРПОРАТИВЕН ДАНЪК при прилагане на метода”Освобождаване с прогресия” </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="allowedcredit" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>РАЗМЕР НА ПРИЗНАТИЯ ДАНЪЧЕН КРЕДИТ ЗА УДЪРЖАНИЯ ДАНЪК В ЧУЖБИНА</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="tax" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>ПОЛАГАЩ СЕ КОРПОРАТИВЕН ДАНЪК, намален с размера на удържания в чужбина данък, за който е признат данъчен кредит</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="table" id="A2D1" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>СПРАВКА 2 – Данни за печалби (доходи), обложени в чужбина при прилагане на метода „освобождаване с прогресия” и/или методи на данъчен кредит</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence minOccurs="0">
+										<xs:element name="rowenum" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:all minOccurs="0">
+													<xs:element name="country" type="country" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Държава</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="incomekind" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Вид доход</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:maxLength value="200"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="isprogression" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Освобождаване с прогресия</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="0"/>
+																<xs:maxLength value="3"/>
+																<xs:enumeration value="Да"/>
+																<xs:enumeration value="Не"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="iscredit" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Данъчен кредит</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="0"/>
+																<xs:maxLength value="3"/>
+																<xs:enumeration value="Да"/>
+																<xs:enumeration value="Не"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="grossincome" type="xs:float" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Брутен размер на дохода/прихода от съответната държава</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="finresult" type="xs:float" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Данъчен финансов резултат от съответната държава</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="taxamountdue" type="xs:float" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Дължим данък по ЗКПО</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="taxpaidabroad" type="xs:float" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Платен данък в чужбина</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="taxcredit" type="xs:float" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>Размер на данъчния кредит</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:all>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="sum" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>СПРАВКА 2 – Данни за печалби (доходи), обложени в чужбина при прилагане на метода „освобождаване с прогресия” и/или методи на данъчен кредит -  ВСИЧКО</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:all minOccurs="0">
+										<xs:element name="tax" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Дължим данък по ЗКПО</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="taxpaidabroad" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Платен данък в чужбина</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="taxcredit" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Размер на данъчния кредит</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="app3" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Приложение № 3
+за регулиране на разходите по заеми по реда на чл. 43а от ЗКПО</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:all minOccurs="0">
+							<xs:element name="rep1" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>СПРАВКА 1 – ПРАВИЛО ЗА ОГРАНИЧАВАНЕ ПРИСПАДАНЕТО НА ЛИХВИ ПО ЧЛ. 43А ОТ ЗКПО</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:all minOccurs="0">
+										<xs:element name="row1" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ДФР (данъчен финансов резултат, формиран по общия ред на ЗКПО, преди приспадане на данъчни загуби и преди прилагането на чл. 43 и чл. 43а от ЗКПО)</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="row2" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ДА (общ размер на годишните данъчни амортизации)</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="row3" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ПЛ (общ размер на признатите за данъчни цели лихви, представляващи приходи и/или суми, които водят до увеличение на данъчния финансов резултат, както и други приходи или суми, икономически еквивалентни на лихви)</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="row4" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>РЗ (общ размер на разходите по заеми, посочени в ал. 4 на чл. 43а от ЗКПО, преди прилагането на чл. 43 и чл. 43а)</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="row5" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ДФРЛДА (данъчен финансов резултат преди лихви, данъци и амортизации за текущата година)а</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="row6" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ПРЗ (превишение на разходите по заеми, определено по реда на чл. 43а, ал. 2 от ЗКПО)</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="row7" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>0,30 х ред 5, когато сумата по ред 5 (ДФРЛДА) е положителна величина, или нула, когато е отрицателна или нулева величина</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="row8" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>НПРЗ (непризнато превишение на разходите по заеми, определено по реда на чл. 43а, ал. 1 от ЗКПО)</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="row9" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Непризнати съгласно чл. 43а, ал. 1 от ЗКПО разходи по заеми за предходните години, които не са признати по реда на чл. 43а, ал. 5</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="row10" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ППРЗ (признато превишение на разходи по заеми, определено по реда на чл. 43а, ал. 5 от ЗКПО)</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="row11" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>На този ред се записва сумата от ред 10, ограничена до размера на сумата по ред 9 и с нея се намалява счетоводният финансов резултат</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="rep2a" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>СПРАВКА 2 – КОМБИНИРАНО ПРИЛАГАНЕ НА ЧЛ .43 И ЧЛ. 43А ОТ ЗКПО - Част А</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:all minOccurs="0">
+										<xs:element name="isrow1" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>НПРЗ по чл. 43а по-голямо от НРЛ по чл. 43 </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="isrow2" type="xs:boolean" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>НПРЗ по чл. 43а по-малко от НРЛ по чл. 43</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="row3" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>В случай че на ред 1 е отбелязано «ДА», на този ред се посочва сумата от ред 8 на справка 1 </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="row41" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>/ред 8 на справка 1/</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="row42" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>/ред 7.1 от част ХІ на образец 1010 – ред 8 на справка 1/</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="rep2b" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>СПРАВКА 2 – КОМБИНИРАНО ПРИЛАГАНЕ НА ЧЛ .43 И ЧЛ. 43А ОТ ЗКПО - Част Б</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:all minOccurs="0">
+										<xs:element name="row5" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>В случай че е попълнен ред 11 на справка 1 и ред 9 от част ХІ на образец 1010, на този ред се посочва сумата от ред 11 на справка 1 </xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="row6" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Остатък на ППРЗ след прилагането на чл. 43а, ал. 5</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="row7" type="xs:float" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Сумата от ред 9 на част ХІ на образец 1010, ограничена до размера на сумата от ред 6</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="app4" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Приложение № 4 за определяне на временна солидарна вноска за генерираните свръхпечалби</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:all minOccurs="0">
+							<xs:element name="col1" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Средна облагаема печалба (СОП) за периода </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="col2" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>СОП, увеличена с 20%</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="col21" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>СОП, увеличена с 20%, изчислена  за целите на ВСВ при ставка 33 %</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="col22" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>СОП, увеличена с 20%, изчислена  за целите на ВСВ при ставка 50 % </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="col3" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Данъчна печалба (ДП) за данъчната година </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="col31" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>ДП за периода за който ставката на ВСВ е 33 % </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="col32" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>ДП за периода за който ставката на ВСВ е 50 %</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="col4" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Разлика между ДП и СОП, увеличена с 20 %</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="col41" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Разлика между ДП и СОП, увеличена с 20 %, за целите на ВСВ при ставка 33 % </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="col42" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Разлика между ДП и СОП, увеличена с 20 % за целите на ВСВ при ставка 50 % </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="col51" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Размер на ВСВ при ставка 33 %</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="col52" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Размер на ВСВ при ставка 50 %</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="col5" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Общ размер на ВСВ за данъчната година</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="col6" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Внесени авансови вноски за ВСВ</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="col7" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Разлика
+(к. 5 - к.6) </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="col8" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Данъчна печалба след приспадане на ВСВ</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="col9" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Сума, върху която се дължи лихва съгласно § 9, ал. 7 от ПЗР на ЗИДЗКПО</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="typeref1">
+		<xs:annotation>
+			<xs:documentation> амортизации</xs:documentation>
+		</xs:annotation>
+		<xs:all minOccurs="0">
+			<xs:element name="anualpayoff" type="xs:float" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Годишна данъчна амортизация</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="payoffvalue" type="xs:float" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Данъчна амортизируема стойност</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="payoffexpense" type="xs:float" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Начислена данъчна амортизация</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="taxbalancevalue" type="xs:float" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Данъчна стойност</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="typepart8">
+		<xs:annotation>
+			<xs:documentation> Данък върху разходите</xs:documentation>
+		</xs:annotation>
+		<xs:all minOccurs="0">
+			<xs:element name="taxbase" type="xs:float" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Данъчна основа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="tax" type="xs:float" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дължим данък</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="notax" type="xs:float" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Необлагаеми разходи </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="typeapp1ref1">
+		<xs:sequence minOccurs="0">
+			<xs:element name="rowenum" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:all minOccurs="0">
+						<xs:element name="kind" minOccurs="0">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:length value="2"/>
+									<xs:enumeration value="01"/>
+									<xs:enumeration value="02"/>
+									<xs:enumeration value="03"/>
+									<xs:enumeration value="04"/>
+									<xs:enumeration value="05"/>
+									<xs:enumeration value="06"/>
+									<xs:enumeration value="07"/>
+									<xs:enumeration value="08"/>
+									<xs:enumeration value="09"/>
+									<xs:enumeration value="10"/>
+									<xs:enumeration value="11"/>
+									<xs:enumeration value="12"/>
+									<xs:enumeration value="13"/>
+									<xs:enumeration value="14"/>
+									<xs:enumeration value="15"/>
+									<xs:enumeration value="16"/>
+									<xs:enumeration value="17"/>
+									<xs:enumeration value="18"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="name" type="xs:string" minOccurs="0"/>
+						<xs:element name="EUESS" type="xs:boolean" minOccurs="0"/>
+						<xs:element name="bulstat" type="bulstat" minOccurs="0"/>
+						<xs:element name="value" type="xs:float" minOccurs="0"/>
+					</xs:all>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="address">
+		<xs:annotation>
+			<xs:documentation> </xs:documentation>
+		</xs:annotation>
+		<xs:all minOccurs="0">
+			<xs:element name="country" type="country"/>
+			<xs:element name="region" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="200"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="municipality" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="200"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="city">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="200"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="localaddress">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="1000"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="postcode" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="cell">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="4"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="typelocaddress">
+		<xs:all minOccurs="0">
+			<xs:element name="region" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="200"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="municipality" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="200"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="city" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="200"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="postcode" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="cell">
+						<xs:minLength value="0"/>
+						<xs:maxLength value="4"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="localaddress" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="1000"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="phonecode" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="phone" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="50"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="faxcode" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="fax" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="50"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="email" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="200"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="typeapp1ref2help">
+		<xs:all minOccurs="0">
+			<xs:element name="r1407" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Регламент 1407/2013</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:all minOccurs="0">
+						<xs:element name="auto" type="xs:float" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>автомобилни товарни превози</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="other" type="xs:float" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>други дейности по Регламент 1407/2013</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:all>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="r360" type="xs:float" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Регламент 360/2012</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="typeapp1ref2company">
+		<xs:all minOccurs="0">
+			<xs:element name="bulstat" type="bulstat" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ЕИК</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="name" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="200"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="r1407" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Регламент 1407/2013</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:all minOccurs="0">
+						<xs:element name="auto" type="xs:float" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>автомобилни товарни превози </xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="other" type="xs:float" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>други дейности по Регламент 1407/2013</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:all>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="other" type="xs:float" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Други регламенти за минимална помощ </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="r360" type="xs:float" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Регламент 360/2012</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="shareholderType">
+		<xs:sequence minOccurs="0">
+			<xs:element name="rowenum" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:all minOccurs="0">
+						<xs:element name="name" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>1. Име/наименование</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:maxLength value="200"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="idnumber" type="xs:string" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>2. Идентификационен номер в държавата, 
+на която лицето е местно
+</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="country" type="country" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>3.1.Държава </xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="city" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>3.2. Населено място (гр./с.)</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:maxLength value="200"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="region" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>3.3.Област/район</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:maxLength value="200"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="postcode" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>3.4. Пощенски код</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:maxLength value="20"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="street" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>3.5. Улица</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:maxLength value="200"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="number" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>3.6. Номер на улица</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:maxLength value="20"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="floor" type="xs:integer" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>3.7. Етаж	</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="appartment" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>3.8. Ап.</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:maxLength value="50"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="district" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>3.9. Квартал</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:maxLength value="200"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="partpercent" type="xs:decimal" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>4. Размер на участието (в %) </xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:all>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="cell">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="egn">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="8"/>
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="bulstat">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="9"/>
+			<xs:maxLength value="13"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="iban">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="34"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="country">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="200"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

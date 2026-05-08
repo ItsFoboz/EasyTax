@@ -1,4 +1,4 @@
-import { getTaxConstants } from "./constants/index.js";
+import { getTaxConstants } from "./constants/index";
 
 export interface VatProximity {
   vat_warning: boolean;

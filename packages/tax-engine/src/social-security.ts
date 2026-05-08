@@ -1,9 +1,9 @@
-import { getTaxConstants } from "./constants/index.js";
+import { getTaxConstants } from "./constants/index";
 import type {
   InsuranceProfile,
   SocialSecurityBreakdown,
   SocialSecurityInput,
-} from "./types.js";
+} from "./types";
 
 /**
  * Calculates the residual social security a freelancer owes on top of any

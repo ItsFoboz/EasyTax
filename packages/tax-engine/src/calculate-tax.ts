@@ -1,12 +1,12 @@
-import { getTaxConstants } from "./constants/index.js";
-import { calculateResidualSocialSecurity } from "./social-security.js";
-import { computeQuarterly } from "./quarters.js";
-import { computeVatProximity } from "./vat.js";
+import { getTaxConstants } from "./constants/index";
+import { calculateResidualSocialSecurity } from "./social-security";
+import { computeQuarterly } from "./quarters";
+import { computeVatProximity } from "./vat";
 import type {
   InsuranceProfile,
   Invoice,
   TaxResult,
-} from "./types.js";
+} from "./types";
 
 /**
  * Top-level tax calculation for a Bulgarian freelancer.
