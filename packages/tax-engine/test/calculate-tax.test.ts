@@ -66,7 +66,7 @@ describe("calculateTax — basic flow (2024)", () => {
 
   it("VAT warning fires at >=80% of threshold", () => {
     const c = getTaxConstants(year);
-    const eighty = c.vat_threshold_bgn * 0.8;
+    const eighty = c.vat_threshold * 0.8;
     const r = calculateTax(
       [bgnInvoice("2024-06-01", eighty)],
       profile({ type: "civil_contract_only" }),
@@ -80,7 +80,7 @@ describe("calculateTax — basic flow (2024)", () => {
 
   it("VAT warning does not fire at 79% of threshold", () => {
     const c = getTaxConstants(year);
-    const seventyNine = c.vat_threshold_bgn * 0.79;
+    const seventyNine = c.vat_threshold * 0.79;
     const r = calculateTax(
       [bgnInvoice("2024-06-01", seventyNine)],
       profile({ type: "civil_contract_only" }),

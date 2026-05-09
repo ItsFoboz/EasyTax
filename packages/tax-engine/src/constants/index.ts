@@ -1,10 +1,12 @@
 import { constants2024 } from "./2024";
 import { constants2025 } from "./2025";
+import { constants2026 } from "./2026";
 import type { TaxConstants } from "./schema";
 
 const TABLE: Record<number, TaxConstants> = {
   2024: constants2024,
   2025: constants2025,
+  2026: constants2026,
 };
 
 /**
@@ -31,3 +33,4 @@ export function listSupportedYears(): number[] {
 }
 
 export type { TaxConstants } from "./schema";
+export { BGN_EUR_FIXED_RATE } from "./schema";

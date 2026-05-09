@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import {
   calculateTax,
+  getTaxConstants,
   type Invoice,
   type InsuranceProfile,
 } from "@easytax/tax-engine";
@@ -19,6 +20,13 @@ export async function GET(_req: Request, { params }: { params: Promise<{ year: s
     return NextResponse.json({ error: "invalid year" }, { status: 400 });
   }
 
+  let constants;
+  try {
+    constants = getTaxConstants(year);
+  } catch (err) {
+    return NextResponse.json({ error: (err as Error).message }, { status: 400 });
+  }
+
   const [profileRes, userRes, invoiceRes] = await Promise.all([
     supabase
       .from("insurance_profiles")
@@ -29,7 +37,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ year: s
     supabase.from("users").select("birth_year").eq("id", user.id).maybeSingle(),
     supabase
       .from("invoices")
-      .select("issue_date, amount_original, currency, exchange_rate, amount_bgn")
+      .select("issue_date, amount_original, currency, exchange_rate, amount_bgn, amount_eur")
       .eq("user_id", user.id)
       .gte("issue_date", `${year}-01-01`)
       .lte("issue_date", `${year}-12-31`),
@@ -51,10 +59,10 @@ export async function GET(_req: Request, { params }: { params: Promise<{ year: s
 
   const invoices: Invoice[] = (invoiceRes.data ?? []).map((r) => ({
     issue_date: r.issue_date,
-    amount_original: Number(r.amount_original),
+    amount_original: Number(r.amount_original ?? 0),
     currency: r.currency,
-    exchange_rate: Number(r.exchange_rate),
-    amount_bgn: Number(r.amount_bgn),
+    exchange_rate: Number(r.exchange_rate ?? 1),
+    amount: Number(constants.currency === "EUR" ? r.amount_eur ?? 0 : r.amount_bgn ?? 0),
   }));
 
   const result = calculateTax(invoices, profile, year);

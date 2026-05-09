@@ -2,7 +2,12 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import type { InsuranceProfileType } from "@easytax/tax-engine";
+import {
+  getTaxConstants,
+  type InsuranceProfileType,
+  type TaxConstants,
+} from "@easytax/tax-engine";
+import { formatNumber, currencyLabel } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
@@ -44,6 +49,11 @@ export function Wizard({ userId, userEmail }: { userId: string; userEmail: strin
     setData((d) => ({ ...d, [key]: value }));
   }
 
+  // Show step-2 hints in the chosen tax year's currency. If not yet picked,
+  // default to the current calendar year (which is EUR for 2026+).
+  const yearForHints = data.tax_year ?? new Date().getFullYear();
+  const constants = getTaxConstants(yearForHints);
+
   async function submit() {
     setSubmitting(true);
     setError(null);
@@ -67,7 +77,7 @@ export function Wizard({ userId, userEmail }: { userId: string; userEmail: strin
       <Stepper current={step} />
       <div className="mt-6 card">
         {step === 0 && <StepProfileType data={data} update={update} />}
-        {step === 1 && <StepProfileFields data={data} update={update} />}
+        {step === 1 && <StepProfileFields data={data} update={update} constants={constants} />}
         {step === 2 && <StepPersonalDetails data={data} update={update} userEmail={userEmail} />}
         {step === 3 && <StepTaxYear data={data} update={update} />}
 
@@ -123,7 +133,7 @@ function canAdvance(step: number, d: WizardData): boolean {
       if (d.profile_type === "eood_managing_director") return typeof d.eood_monthly_insurance_base === "number";
       if (d.profile_type === "employed_primary") return typeof d.employer_annual_insurable_income === "number";
       if (d.profile_type === "fully_self_employed") return typeof d.chosen_monthly_base === "number";
-      return true; // civil_contract_only
+      return true;
     case 2:
       return Boolean(d.full_name && d.egn && d.birth_year);
     case 3:
@@ -230,10 +240,16 @@ function StepProfileType({
 function StepProfileFields({
   data,
   update,
+  constants,
 }: {
   data: WizardData;
   update: <K extends keyof WizardData>(k: K, v: WizardData[K]) => void;
+  constants: TaxConstants;
 }) {
+  const sym = currencyLabel(constants.year);
+  const minBase = constants.min_monthly_base;
+  const maxBase = constants.max_monthly_base;
+
   if (data.profile_type === "civil_contract_only") {
     return (
       <div>
@@ -253,19 +269,21 @@ function StepProfileFields({
           На каква месечна база ви осигурява вашето ЕООД?
         </p>
         <div className="mt-4">
-          <label htmlFor="eood-base" className="label">Месечна база (лв.)</label>
+          <label htmlFor="eood-base" className="label">Месечна база ({sym})</label>
           <input
             id="eood-base"
             type="number"
-            min={933}
-            max={3750}
+            min={minBase}
+            max={maxBase}
             step={1}
             value={data.eood_monthly_insurance_base ?? ""}
             onChange={(e) => update("eood_monthly_insurance_base", Number(e.target.value))}
             className="input"
-            placeholder="напр. 1500"
+            placeholder={`напр. ${Math.round((minBase + maxBase) / 2)}`}
           />
-          <p className="help">За 2024 г. минимум 933 лв., максимум 3 750 лв.</p>
+          <p className="help">
+            За {constants.year} г.: минимум {formatNumber(minBase)} {sym}, максимум {formatNumber(maxBase)} {sym}.
+          </p>
         </div>
       </div>
     );
@@ -279,7 +297,7 @@ function StepProfileFields({
           Какъв беше приблизително осигурителният ви доход през работодателя за избраната година?
         </p>
         <div className="mt-4">
-          <label htmlFor="employer-income" className="label">Осигурителен доход (лв./година)</label>
+          <label htmlFor="employer-income" className="label">Осигурителен доход ({sym}/година)</label>
           <input
             id="employer-income"
             type="number"
@@ -288,11 +306,11 @@ function StepProfileFields({
             value={data.employer_annual_insurable_income ?? ""}
             onChange={(e) => update("employer_annual_insurable_income", Number(e.target.value))}
             className="input"
-            placeholder="напр. 30000"
+            placeholder={`напр. ${formatNumber(maxBase * 6)}`}
           />
           <p className="help">
-            Това е брутният размер, който работодателят ви декларира за осигурителни цели. Намира се в
-            фиша или попитайте отдел Човешки ресурси.
+            Брутният размер, който работодателят ви декларира за осигурителни цели. Намира се в фиша или
+            попитайте отдел Човешки ресурси.
           </p>
         </div>
         <div className="mt-4 flex items-center gap-2">
@@ -311,40 +329,42 @@ function StepProfileFields({
   }
 
   // fully_self_employed
-  const value = data.chosen_monthly_base ?? 933;
+  const value = data.chosen_monthly_base ?? minBase;
   return (
     <div>
       <h2 className="text-lg font-semibold">Избор на осигурителна база</h2>
       <p className="mt-1 text-sm text-stone-600">
-        На каква месечна база искате да се осигурявате?
+        На каква месечна база искате да се осигурявате? (за {constants.year} г.)
       </p>
       <div className="mt-4">
         <input
           type="range"
-          min={933}
-          max={3750}
+          min={minBase}
+          max={maxBase}
           step={1}
           value={value}
           onChange={(e) => update("chosen_monthly_base", Number(e.target.value))}
           className="w-full"
         />
         <div className="mt-2 flex items-center justify-between text-xs text-stone-500">
-          <span>933 лв. (минимум)</span>
-          <span className="text-base font-semibold text-stone-900">{value.toLocaleString("bg-BG")} лв./мес.</span>
-          <span>3 750 лв. (максимум)</span>
+          <span>{formatNumber(minBase)} {sym} (минимум)</span>
+          <span className="text-base font-semibold text-stone-900">
+            {formatNumber(value)} {sym}/мес.
+          </span>
+          <span>{formatNumber(maxBase)} {sym} (максимум)</span>
         </div>
         <div className="mt-3 flex gap-2">
           <button
             type="button"
             className="btn-secondary"
-            onClick={() => update("chosen_monthly_base", 933)}
+            onClick={() => update("chosen_monthly_base", minBase)}
           >
             Минимум
           </button>
           <button
             type="button"
             className="btn-secondary"
-            onClick={() => update("chosen_monthly_base", 3750)}
+            onClick={() => update("chosen_monthly_base", maxBase)}
           >
             Максимум
           </button>
@@ -452,26 +472,32 @@ function StepTaxYear({
       <h2 className="text-lg font-semibold">За коя данъчна година подавате?</h2>
       <p className="mt-1 text-sm text-stone-600">
         По подразбиране — предходната календарна година.
+        2024 и 2025 са в лева; 2026 и нататък — в евро.
       </p>
       <div className="mt-4 grid grid-cols-3 gap-2">
-        {years.map((y) => (
-          <button
-            key={y}
-            type="button"
-            onClick={() => update("tax_year", y)}
-            className={
-              "rounded-lg border p-4 text-center transition " +
-              (data.tax_year === y
-                ? "border-brand-500 bg-brand-50 text-brand-900"
-                : "border-stone-200 bg-white hover:border-stone-300")
-            }
-          >
-            <div className="text-lg font-semibold">{y}</div>
-            <div className="text-xs text-stone-500">
-              {y === currentYear - 1 ? "препоръчано" : y === currentYear ? "текуща" : "минала"}
-            </div>
-          </button>
-        ))}
+        {years.map((y) => {
+          const c = (() => { try { return getTaxConstants(y); } catch { return null; } })();
+          return (
+            <button
+              key={y}
+              type="button"
+              onClick={() => update("tax_year", y)}
+              disabled={!c}
+              className={
+                "rounded-lg border p-4 text-center transition disabled:opacity-50 " +
+                (data.tax_year === y
+                  ? "border-brand-500 bg-brand-50 text-brand-900"
+                  : "border-stone-200 bg-white hover:border-stone-300")
+              }
+            >
+              <div className="text-lg font-semibold">{y}</div>
+              <div className="text-xs text-stone-500">
+                {c ? c.currency : "не е налична"}
+                {y === currentYear - 1 && c ? " · препоръчано" : ""}
+              </div>
+            </button>
+          );
+        })}
       </div>
     </div>
   );

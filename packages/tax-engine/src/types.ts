@@ -1,9 +1,13 @@
 /**
  * Public type definitions for the tax-engine package.
  *
- * All monetary values are in Bulgarian Lev (BGN). Invoices arriving in foreign
- * currencies are expected to have been converted to BGN at the BNB official
- * rate for the invoice date BEFORE being passed into calculateTax().
+ * All monetary values inside the engine are in the *filing currency* of the
+ * given tax year — BGN for 2024-2025, EUR from 2026 onward (Bulgaria adopted
+ * the euro on 2026-01-01 at the fixed parity 1 EUR = 1.95583 BGN).
+ *
+ * Foreign-currency invoices are expected to have been converted to the
+ * filing currency at the BNB official rate for the invoice date BEFORE
+ * being passed to calculateTax().
  */
 
 export type InsuranceProfileType =
@@ -28,8 +32,6 @@ export interface InsuranceProfile {
   chosen_monthly_base?: number;
 
   // Mid-year profile change support.
-  // If profile_valid_from is set, the engine refuses to calculate and flags
-  // the case for a qualified accountant.
   profile_valid_from?: string; // ISO date.
   previous_profile?: Omit<InsuranceProfile, "previous_profile">;
 }
@@ -41,21 +43,24 @@ export interface Invoice {
   /** Amount on the invoice in its original currency. */
   amount_original: number;
   currency: string; // "BGN" | "EUR" | "USD" | "GBP" | ...
-  /** BNB official rate used to convert to BGN. 1.0 if currency === "BGN". */
+  /** BNB official rate used to convert to the filing currency. 1.0 if currency matches filing currency. */
   exchange_rate: number;
-  /** Amount in BGN at the BNB rate locked at extraction time. The engine uses this only. */
-  amount_bgn: number;
+  /**
+   * Amount in the filing currency of the tax year, locked at extraction time.
+   * For 2024-2025 this is BGN; for 2026+ this is EUR.
+   * Whoever assembles the Invoice list is responsible for picking the right
+   * column from the database (`amount_bgn` or `amount_eur`) for the year.
+   */
+  amount: number;
 }
 
 export interface SocialSecurityBreakdown {
   pension: number;
   health: number;
   sickness_maternity: number;
-  upf: number; // 2nd pillar, post-1959 only.
+  upf: number;
   total: number;
-  /** Human-readable explanation of why this amount is owed (or not). */
   coverage_note: string;
-  /** Annual base on which the contributions above were assessed. */
   residual_base: number;
 }
 
@@ -69,6 +74,8 @@ export interface QuarterlyBreakdown {
 export interface TaxResultSuccess {
   status: "ok";
   year: number;
+  /** Filing currency for this tax year. */
+  currency: "BGN" | "EUR";
   gross_income: number;
   normative_expenses: number;
   intermediate_tax_base: number;
@@ -91,7 +98,7 @@ export interface RequiresAccountant {
 export type TaxResult = TaxResultSuccess | RequiresAccountant;
 
 export interface SocialSecurityInput {
-  freelance_income: number; // gross BGN income from invoices for the year
+  freelance_income: number; // gross income (filing currency) for the year
   profile: InsuranceProfile;
   year: number;
 }

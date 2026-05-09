@@ -16,7 +16,7 @@ import type {
  * Steps:
  *   1. If a mid-year profile change is flagged on the profile, refuse to
  *      compute and return { status: "requires_accountant" }.
- *   2. Sum gross income from invoices for the year (already in BGN).
+ *   2. Sum gross income from invoices for the year (already in filing currency).
  *   3. Apply 25% normative expense deduction → intermediate tax base.
  *   4. Compute residual social security via {@link calculateResidualSocialSecurity}.
  *   5. Subtract SS from the intermediate base → final taxable base
@@ -40,11 +40,10 @@ export function calculateTax(
 
   const c = getTaxConstants(year);
 
-  // Sum gross income, restricted to invoices issued in the requested year.
   const gross_income = round2(
     invoices
       .filter((inv) => inv.issue_date.startsWith(`${year}-`))
-      .reduce((acc, inv) => acc + (Number.isFinite(inv.amount_bgn) ? inv.amount_bgn : 0), 0),
+      .reduce((acc, inv) => acc + (Number.isFinite(inv.amount) ? inv.amount : 0), 0),
   );
 
   const normative_expenses = round2(gross_income * c.normative_expense_rate);
@@ -84,6 +83,7 @@ export function calculateTax(
   return {
     status: "ok",
     year,
+    currency: c.currency,
     gross_income,
     normative_expenses,
     intermediate_tax_base,

@@ -22,7 +22,7 @@ export function quarterFromIsoDate(iso: string): QuarterIndex {
 }
 
 /**
- * Sums invoice amounts (in BGN) by calendar quarter.
+ * Sums invoice amounts (in the filing currency) by calendar quarter.
  * Filters by year if provided.
  */
 export function sumByQuarter(
@@ -33,7 +33,7 @@ export function sumByQuarter(
   for (const inv of invoices) {
     if (year !== undefined && !inv.issue_date.startsWith(`${year}-`)) continue;
     const q = quarterFromIsoDate(inv.issue_date);
-    sums[q] += inv.amount_bgn;
+    sums[q] += inv.amount;
   }
   return sums;
 }
@@ -42,16 +42,13 @@ export function sumByQuarter(
  * Computes the four quarterly figures the user pays.
  *
  * Q1, Q2, Q3 are advance payments due on the 15th of the month following
- * the quarter end (April 15, July 15, October 15). Each advance is 10% of:
+ * the quarter end. Each advance is 10% of:
  *
  *   quarterly_gross
  *     - 25% normative expense (proportional to that quarter)
  *     - SS contributions for that quarter (proportional to gross share)
  *
- * Q4 is the final reconciliation booked in the annual declaration (Apr 30
- * the following year): it is whatever is left of total income tax after
- * advances. It can be negative if advances over-paid; the engine returns
- * the signed delta.
+ * Q4 is the final reconciliation booked in the annual declaration.
  */
 export function computeQuarterly(args: {
   invoices: Invoice[];
