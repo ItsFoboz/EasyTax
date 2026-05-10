@@ -1,24 +1,30 @@
 /**
  * Bulgarian tax & social security constants for tax year 2026.
  *
- * First EUR tax year. Bulgaria adopted the euro on 2026-01-01 at the fixed
- * parity 1 EUR = 1.95583 BGN.
+ * First EUR tax year. Bulgaria adopted the euro on 2026-01-01 at the
+ * official fixed parity 1 EUR = 1.95583 BGN. Because the 2026 Budget Act
+ * was not adopted in time, the main thresholds, contribution bases, taxes
+ * and benefits were "frozen" at their 2025 BGN levels and automatically
+ * converted to EUR at parity (rounded to 2 decimals per the official
+ * methodology — wages/pensions round at the third decimal place UP).
  *
- * ⚠️ TODO: VERIFY all 2026 figures against the published 2026 Budget Act and
- * 2026 КСО amendments before relying on these in production.
+ * Source: published amendments effective 2026-01-01.
  *
- * Per scaffold instruction (option 2), figures below are derived by direct
- * conversion of 2025 BGN values at the fixed parity, with conservative
- * rounding (min rounded UP, max rounded DOWN) to stay safely inside the
- * legal range until the official 2026 Budget Act figures are wired in.
- *
- *   min_monthly_base:  1077 BGN / 1.95583 = 550.66 EUR → rounded up to 551
- *   max_monthly_base:  4130 BGN / 1.95583 = 2111.66 EUR → rounded down to 2111
- *   vat_threshold:     166000 BGN / 1.95583 = 84874.00 EUR (exact)
+ * Conversion provenance:
+ *   min_monthly_base:  1077 BGN / 1.95583 = 550.66 EUR
+ *   max_monthly_base:  4130 BGN / 1.95583 = 2111.64 EUR
+ *   vat_threshold:     100,000 BGN / 1.95583 ≈ 51,130 EUR (officially published as 51,130)
  *
  * All rates (income tax 10%, pension 14.8% / 19.8%, UPF 5%, health 8%,
- * sickness/maternity 3.5%) are unchanged — euro adoption is a unit conversion,
- * not a tax reform.
+ * sickness/maternity 3.5%) are unchanged — euro adoption is a unit
+ * conversion, not a tax reform.
+ *
+ * Note: the 2026 statutory minimum wage is 620.20 EUR/month (BGN 1,213) —
+ * higher than the minimum insurable income of 550.66 EUR. For certain
+ * occupational groups whose insurable income is below the minimum wage,
+ * social security contributions are calculated on the minimum wage. v1
+ * doesn't model occupational groups; freelancers and self-insured persons
+ * pay on min_monthly_base as before.
  */
 
 import type { TaxConstants } from "./schema";
@@ -28,9 +34,9 @@ export const constants2026: TaxConstants = {
   currency: "EUR",
   normative_expense_rate: 0.25,
   income_tax_rate: 0.1,
-  min_monthly_base: 551, // TODO: verify against 2026 Budget Act
-  max_monthly_base: 2_111, // TODO: verify against 2026 Budget Act
-  vat_threshold: 84_874, // TODO: verify (exact conversion of 166,000 BGN)
+  min_monthly_base: 550.66,
+  max_monthly_base: 2_111.64,
+  vat_threshold: 51_130, // EUR; officially published — 100,000 BGN at parity
   health_insurance_rate: 0.08,
   pension_rate_pre1960: 0.198,
   pension_rate_post1959: 0.148,

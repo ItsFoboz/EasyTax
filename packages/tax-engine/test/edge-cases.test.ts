@@ -41,22 +41,29 @@ describe("sumByQuarter", () => {
 
 describe("computeVatProximity", () => {
   it("computes proximity percent and warning correctly", () => {
-    const r = computeVatProximity(100_000, 2024);
-    // 100,000 / 166,000 ≈ 60.2%
-    expect(r.vat_proximity_percent).toBeCloseTo(60.2, 1);
+    // 50,000 / 100,000 = 50%, well under 80% warning
+    const r = computeVatProximity(50_000, 2024);
+    expect(r.vat_proximity_percent).toBe(50);
     expect(r.vat_warning).toBe(false);
   });
 
   it("warns at exactly the threshold", () => {
-    const r = computeVatProximity(166_000, 2024);
+    const r = computeVatProximity(100_000, 2024);
     expect(r.vat_proximity_percent).toBe(100);
     expect(r.vat_warning).toBe(true);
   });
 
   it("returns over-100% past the threshold", () => {
-    const r = computeVatProximity(200_000, 2024);
+    const r = computeVatProximity(150_000, 2024);
     expect(r.vat_proximity_percent).toBeGreaterThan(100);
     expect(r.vat_warning).toBe(true);
+  });
+
+  it("uses the 2026 EUR threshold for 2026", () => {
+    // 51,130 / 2 = 25,565 EUR is 50% of threshold
+    const r = computeVatProximity(25_565, 2026);
+    expect(r.vat_proximity_percent).toBe(50);
+    expect(r.vat_warning).toBe(false);
   });
 });
 
@@ -96,7 +103,7 @@ describe("calculateTax — corner amounts", () => {
 
   it("handles income well above the maximum SS base", () => {
     const r = calculateTax(
-      [bgnInvoice("2024-06-30", 200_000)],
+      [bgnInvoice("2024-06-30", 150_000)],
       profile({
         type: "fully_self_employed",
         birth_year: 1985,
@@ -108,7 +115,7 @@ describe("calculateTax — corner amounts", () => {
     if (r.status !== "ok") return;
     // SS base capped at annual max regardless of income
     expect(r.social_security.residual_base).toBe(45_000);
-    // VAT warning expected at this income level
+    // VAT warning expected at this income level (>100k BGN threshold)
     expect(r.vat_warning).toBe(true);
   });
 

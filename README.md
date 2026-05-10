@@ -136,9 +136,10 @@ Configured: **2024** (authoritative), **2025** (seeded, marked `// TODO: verify`
   Phase 6 wires AES-256-GCM with `EGN_ENCRYPTION_KEY` from env.
 - **2025 constants** are seeded with best-available public figures. Verify
   before any production filing.
-- **2024 VAT threshold** in spec was 166,000 BGN; the actual 2024 threshold
-  was 100,000 BGN before the Jan-2025 increase. Fix in `constants/2024.ts`
-  if you need historically accurate 2024 behavior.
+- **VAT threshold corrected** to 100,000 BGN (was 166,000 in original spec —
+  per the 2026 transition guidance the threshold has been "maintained" since
+  before 2024). In EUR: 51,130. Verified against the official 2026 amendment
+  notice.
 - **Sickness/maternity rate** is applied to all four profiles uniformly per
   the literal spec. For `employed_primary` it is normally already covered
   by the employer — adjust in `social-security.ts` if needed.

@@ -14,7 +14,7 @@ export const constants2025: TaxConstants = {
   income_tax_rate: 0.1,
   min_monthly_base: 1_077, // TODO: verify
   max_monthly_base: 4_130, // TODO: verify
-  vat_threshold: 166_000,
+  vat_threshold: 100_000,
   health_insurance_rate: 0.08,
   pension_rate_pre1960: 0.198,
   pension_rate_post1959: 0.148,
