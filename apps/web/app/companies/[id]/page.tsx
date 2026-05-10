@@ -110,7 +110,15 @@ export default async function CompanyDashboardPage({
               {company.vat_registered ? `Регистрирано по ЗДДС${company.vat_number ? ` (${company.vat_number})` : ""}` : "Без регистрация по ЗДДС"}
             </p>
           </div>
-          <div className="text-sm text-stone-500">Данъчна година: <strong>{taxYear}</strong> · {constants.currency}</div>
+          <div className="flex flex-col items-end gap-2">
+            <div className="text-sm text-stone-500">Данъчна година: <strong>{taxYear}</strong> · {constants.currency}</div>
+            <Link
+              href={`/companies/${id}/dividends`}
+              className="text-sm font-medium text-brand-700 hover:text-brand-800"
+            >
+              Дивиденти →
+            </Link>
+          </div>
         </div>
       </header>
 
