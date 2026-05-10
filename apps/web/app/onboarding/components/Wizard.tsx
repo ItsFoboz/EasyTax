@@ -57,10 +57,17 @@ export function Wizard({ userId, userEmail }: { userId: string; userEmail: strin
   async function submit() {
     setSubmitting(true);
     setError(null);
+    // Backfill the legal minimum monthly base for fully_self_employed users
+    // who never touched the slider (it shows the minimum by default; they
+    // accepted that implicitly by clicking Next).
+    const payload =
+      data.profile_type === "fully_self_employed" && data.chosen_monthly_base === undefined
+        ? { ...data, chosen_monthly_base: getTaxConstants(yearForHints).min_monthly_base }
+        : data;
     const res = await fetch("/api/profile", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify(payload),
     });
     setSubmitting(false);
     if (!res.ok) {
@@ -132,7 +139,9 @@ function canAdvance(step: number, d: WizardData): boolean {
     case 1:
       if (d.profile_type === "eood_managing_director") return typeof d.eood_monthly_insurance_base === "number";
       if (d.profile_type === "employed_primary") return typeof d.employer_annual_insurable_income === "number";
-      if (d.profile_type === "fully_self_employed") return typeof d.chosen_monthly_base === "number";
+      // fully_self_employed: the slider always has a displayed default (legal minimum);
+      // the user is allowed to advance without explicitly dragging it. The submit
+      // handler fills in the minimum if state is still undefined.
       return true;
     case 2:
       return Boolean(d.full_name && d.egn && d.birth_year);

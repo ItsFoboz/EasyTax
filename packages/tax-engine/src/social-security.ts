@@ -36,6 +36,7 @@ export function calculateResidualSocialSecurity(
     freelanceIncome: freelance_income,
     annualMax,
     annualMin,
+    currency: c.currency,
   });
 
   const isPost1959 = profile.birth_year >= 1960;
@@ -66,6 +67,7 @@ interface ResolveArgs {
   freelanceIncome: number;
   annualMax: number;
   annualMin: number;
+  currency: "BGN" | "EUR";
 }
 
 interface ResolveResult {
@@ -74,14 +76,15 @@ interface ResolveResult {
 }
 
 function resolveResidualBase(args: ResolveArgs): ResolveResult {
-  const { profile, freelanceIncome, annualMax, annualMin } = args;
+  const { profile, freelanceIncome, annualMax, annualMin, currency } = args;
+  const sym = currency === "EUR" ? "€" : "лв.";
 
   switch (profile.type) {
     case "civil_contract_only": {
       return {
         residualBase: 0,
         coverageNote:
-          "Social security is withheld at source by your contracting party. No additional contributions are owed on your freelance income.",
+          "Осигуровките се удържат от платеца. Не дължите допълнителни вноски върху дохода от свободна професия.",
       };
     }
 
@@ -99,6 +102,7 @@ function resolveResidualBase(args: ResolveArgs): ResolveResult {
         originalMonthly: monthlyChoice,
         annualMin,
         annualMax,
+        sym,
       });
       return { residualBase, coverageNote: note };
     }
@@ -110,8 +114,8 @@ function resolveResidualBase(args: ResolveArgs): ResolveResult {
       const residualBase = Math.min(gap, Math.max(freelanceIncome, 0));
       const note =
         gap === 0
-          ? `Your EOOD already covers the maximum annual insurable base (${fmt(annualMax)} BGN). No residual contribution is owed on your freelance income.`
-          : `Your EOOD covers SS on ${fmt(eoodMonthly)} BGN/month (${fmt(eoodAnnual)} BGN/year). Residual gap to the annual maximum: ${fmt(gap)} BGN. You owe contributions on the lesser of that gap and your actual freelance income (${fmt(freelanceIncome)} BGN), i.e. ${fmt(residualBase)} BGN.`;
+          ? `Вашето ЕООД вече покрива максималната годишна осигурителна база (${fmt(annualMax)} ${sym}). Не дължите остатъчни осигуровки върху дохода от свободна професия.`
+          : `Вашето ЕООД ви осигурява на ${fmt(eoodMonthly)} ${sym}/мес. (${fmt(eoodAnnual)} ${sym}/год.). Разлика до годишния максимум: ${fmt(gap)} ${sym}. Дължите вноски върху по-малката от тази разлика и реалния доход от свободна професия (${fmt(freelanceIncome)} ${sym}) — т.е. ${fmt(residualBase)} ${sym}.`;
       return { residualBase, coverageNote: note };
     }
 
@@ -121,8 +125,8 @@ function resolveResidualBase(args: ResolveArgs): ResolveResult {
       const residualBase = Math.min(gap, Math.max(freelanceIncome, 0));
       const note =
         gap === 0
-          ? `Your employer already reports insurable income at or above the annual maximum (${fmt(annualMax)} BGN). No residual contribution is owed on your freelance income.`
-          : `Your employer reports ${fmt(employerAnnual)} BGN of insurable income. Residual gap to the annual maximum: ${fmt(gap)} BGN. You owe contributions on the lesser of that gap and your actual freelance income (${fmt(freelanceIncome)} BGN), i.e. ${fmt(residualBase)} BGN.`;
+          ? `Работодателят ви декларира осигурителен доход на или над годишния максимум (${fmt(annualMax)} ${sym}). Не дължите остатъчни осигуровки върху дохода от свободна професия.`
+          : `Работодателят ви декларира ${fmt(employerAnnual)} ${sym} осигурителен доход. Разлика до годишния максимум: ${fmt(gap)} ${sym}. Дължите вноски върху по-малката от тази разлика и реалния доход от свободна професия (${fmt(freelanceIncome)} ${sym}) — т.е. ${fmt(residualBase)} ${sym}.`;
       return { residualBase, coverageNote: note };
     }
 
@@ -141,20 +145,21 @@ interface FseNoteArgs {
   originalMonthly: number;
   annualMin: number;
   annualMax: number;
+  sym: string;
 }
 
 function describeFullySelfEmployed(args: FseNoteArgs): string {
-  const { freelanceIncome, chosenAnnual, residualBase, clampedMonthly, originalMonthly, annualMin, annualMax } = args;
+  const { freelanceIncome, chosenAnnual, residualBase, clampedMonthly, originalMonthly, annualMin, annualMax, sym } = args;
   const clampNote =
     originalMonthly < annualMin / 12
-      ? ` (raised from ${fmt(originalMonthly)} BGN to the legal minimum of ${fmt(annualMin / 12)} BGN/month)`
+      ? ` (вдигнато от ${fmt(originalMonthly)} ${sym} до законовия минимум от ${fmt(annualMin / 12)} ${sym}/мес.)`
       : originalMonthly > annualMax / 12
-        ? ` (capped at the legal maximum of ${fmt(annualMax / 12)} BGN/month)`
+        ? ` (ограничено до законовия максимум от ${fmt(annualMax / 12)} ${sym}/мес.)`
         : "";
   if (residualBase < chosenAnnual) {
-    return `Self-employment contributions on your chosen monthly base of ${fmt(clampedMonthly)} BGN${clampNote}. Capped at your actual annual freelance income of ${fmt(freelanceIncome)} BGN.`;
+    return `Самоосигуряване на избрана месечна база ${fmt(clampedMonthly)} ${sym}${clampNote}. Ограничено до реалния годишен доход от свободна професия от ${fmt(freelanceIncome)} ${sym}.`;
   }
-  return `Self-employment contributions on your chosen monthly base of ${fmt(clampedMonthly)} BGN${clampNote} (${fmt(chosenAnnual)} BGN/year).`;
+  return `Самоосигуряване на избрана месечна база ${fmt(clampedMonthly)} ${sym}${clampNote} (${fmt(chosenAnnual)} ${sym}/год.).`;
 }
 
 function clamp(n: number, min: number, max: number): number {

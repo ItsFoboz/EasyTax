@@ -16,7 +16,7 @@ describe("social-security — fully_self_employed", () => {
       year: YEAR,
     });
     expect(ss.residual_base).toBe(ANNUAL_MIN);
-    expect(ss.coverage_note).toMatch(/self-employment/i);
+    expect(ss.coverage_note).toMatch(/Самоосигуряване/);
   });
 
   it("clamps a chosen base below the legal minimum", () => {
@@ -30,7 +30,7 @@ describe("social-security — fully_self_employed", () => {
       year: YEAR,
     });
     expect(ss.residual_base).toBe(ANNUAL_MIN);
-    expect(ss.coverage_note).toMatch(/raised from .* to the legal minimum/i);
+    expect(ss.coverage_note).toMatch(/вдигнато от .* до законовия минимум/);
   });
 
   it("clamps a chosen base above the legal maximum", () => {
@@ -44,7 +44,7 @@ describe("social-security — fully_self_employed", () => {
       year: YEAR,
     });
     expect(ss.residual_base).toBe(ANNUAL_MAX);
-    expect(ss.coverage_note).toMatch(/capped at the legal maximum/i);
+    expect(ss.coverage_note).toMatch(/ограничено до законовия максимум/);
   });
 
   it("caps base at actual freelance income when income < chosen annual base", () => {
@@ -58,7 +58,7 @@ describe("social-security — fully_self_employed", () => {
       year: YEAR,
     });
     expect(ss.residual_base).toBe(5_000);
-    expect(ss.coverage_note).toMatch(/capped at your actual annual freelance income/i);
+    expect(ss.coverage_note).toMatch(/реалния годишен доход от свободна професия/);
   });
 
   it("applies post-1959 pension split (1st pillar + UPF)", () => {
@@ -124,7 +124,7 @@ describe("social-security — civil_contract_only", () => {
     expect(ss.health).toBe(0);
     expect(ss.sickness_maternity).toBe(0);
     expect(ss.residual_base).toBe(0);
-    expect(ss.coverage_note).toMatch(/withheld at source/i);
+    expect(ss.coverage_note).toMatch(/удържат от платеца/);
   });
 });
 
@@ -141,7 +141,7 @@ describe("social-security — eood_managing_director", () => {
     });
     expect(ss.residual_base).toBe(0);
     expect(ss.total).toBe(0);
-    expect(ss.coverage_note).toMatch(/already covers the maximum/i);
+    expect(ss.coverage_note).toMatch(/вече покрива максималната/);
   });
 
   it("residual = annualMax − eoodAnnual when freelance income exceeds the gap", () => {
@@ -186,7 +186,7 @@ describe("social-security — employed_primary", () => {
     });
     expect(ss.residual_base).toBe(0);
     expect(ss.total).toBe(0);
-    expect(ss.coverage_note).toMatch(/at or above the annual maximum/i);
+    expect(ss.coverage_note).toMatch(/на или над годишния максимум/);
   });
 
   it("residual is the gap, capped at freelance income", () => {
