@@ -34,11 +34,11 @@ export interface WizardData {
 
 const STEPS = ["Тип осигуряване", "Детайли", "Лични данни", "Данъчна година"] as const;
 
-export function Wizard({ userId, userEmail }: { userId: string; userEmail: string }) {
+export function Wizard({ userEmail }: { userId: string; userEmail: string }) {
   const router = useRouter();
   const [step, setStep] = useState(0);
   const [data, setData] = useState<WizardData>({
-    tax_year: new Date().getFullYear() - 1,
+    tax_year: new Date().getFullYear(),
     health_insured_elsewhere: false,
     vat_registered: false,
   });
@@ -125,9 +125,6 @@ export function Wizard({ userId, userEmail }: { userId: string; userEmail: strin
         </div>
       </div>
 
-      <p className="mt-4 text-xs text-stone-500">
-        Потребител: <span className="font-mono">{userId.slice(0, 8)}…</span>
-      </p>
     </div>
   );
 }
@@ -154,29 +151,40 @@ function canAdvance(step: number, d: WizardData): boolean {
 
 function Stepper({ current }: { current: number }) {
   return (
-    <ol className="flex items-center gap-2 text-xs font-medium">
-      {STEPS.map((label, i) => {
-        const state = i < current ? "done" : i === current ? "active" : "pending";
-        return (
-          <li key={label} className="flex flex-1 items-center gap-2">
-            <span
-              className={
-                "flex h-6 w-6 items-center justify-center rounded-full text-xs " +
-                (state === "active"
-                  ? "bg-brand-600 text-white"
-                  : state === "done"
-                    ? "bg-brand-100 text-brand-700"
-                    : "bg-stone-200 text-stone-500")
-              }
-            >
-              {i + 1}
-            </span>
-            <span className={state === "pending" ? "text-stone-400" : "text-stone-700"}>{label}</span>
-            {i < STEPS.length - 1 && <span className="ml-1 h-px flex-1 bg-stone-200" />}
-          </li>
-        );
-      })}
-    </ol>
+    <div className="space-y-3">
+      <ol className="flex items-center">
+        {STEPS.map((label, i) => {
+          const state = i < current ? "done" : i === current ? "active" : "pending";
+          return (
+            <li key={label} className="flex flex-1 items-center last:flex-none">
+              <span
+                className={
+                  "flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-medium " +
+                  (state === "active"
+                    ? "bg-brand-600 text-white"
+                    : state === "done"
+                      ? "bg-brand-100 text-brand-700"
+                      : "bg-stone-100 text-stone-400")
+                }
+              >
+                {i + 1}
+              </span>
+              {i < STEPS.length - 1 && (
+                <span
+                  className={
+                    "mx-2 h-px flex-1 " +
+                    (i < current ? "bg-brand-300" : "bg-stone-200")
+                  }
+                />
+              )}
+            </li>
+          );
+        })}
+      </ol>
+      <p className="text-xs text-stone-500">
+        Стъпка {current + 1} от {STEPS.length} · <span className="font-medium text-stone-700">{STEPS[current]}</span>
+      </p>
+    </div>
   );
 }
 
@@ -397,7 +405,7 @@ function StepPersonalDetails({
     <div>
       <h2 className="text-lg font-semibold">Лични данни</h2>
       <p className="mt-1 text-sm text-stone-600">
-        Необходими за генериране на декларацията. ЕГН се съхранява криптирано.
+        Необходими за генериране на декларацията.
       </p>
       <p className="mt-1 text-xs text-stone-500">Имейл: {userEmail}</p>
 
@@ -425,7 +433,7 @@ function StepPersonalDetails({
             onChange={(e) => update("egn", e.target.value.replace(/\D/g, ""))}
             className="input font-mono"
           />
-          <p className="help">10 цифри. Използва се само за документи и се съхранява криптирано.</p>
+          <p className="help">10 цифри. Използва се само за генериране на документите. Не се споделя с трети страни.</p>
         </div>
         <div>
           <label htmlFor="birth-year" className="label">Година на раждане</label>

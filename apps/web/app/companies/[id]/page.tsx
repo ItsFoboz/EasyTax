@@ -125,7 +125,7 @@ export default async function CompanyDashboardPage({
       {/* Breakdown */}
       <div className="card">
         <h2 className="text-lg font-semibold">Разбивка</h2>
-        <dl className="mt-4 space-y-2 font-mono text-sm">
+        <dl className="mt-4 space-y-2 text-sm">
           <Row label="Приходи" value={formatMoney(result.total_revenue, taxYear)} />
           <Row label="− Общо разходи" value={`− ${formatMoney(result.total_expenses, taxYear)}`} />
           <Divider />
@@ -204,7 +204,7 @@ export default async function CompanyDashboardPage({
 function Stat({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
   return (
     <div className={"card " + (highlight ? "border-brand-300 bg-brand-50" : "")}>
-      <div className="text-xs uppercase tracking-wide text-stone-500">{label}</div>
+      <div className="text-xs text-stone-500">{label}</div>
       <div className={"mt-1 text-2xl font-semibold tabular-nums " + (highlight ? "text-brand-900" : "")}>
         {value}
       </div>

@@ -18,7 +18,7 @@ export default async function CompaniesIndexPage() {
             ЕООД / ООД / АД, за които подавате корпоративен данък (ЗКПО, чл. 92).
           </p>
         </div>
-        <Link href="/companies/new" className="btn-primary">+ Добави дружество</Link>
+        <Link href="/companies/new" className="btn-primary">Добави дружество</Link>
       </header>
 
       {companies && companies.length > 0 ? (
@@ -38,9 +38,26 @@ export default async function CompaniesIndexPage() {
           ))}
         </div>
       ) : (
-        <div className="card text-center">
-          <p className="text-sm text-stone-600">Все още няма добавени дружества.</p>
-          <Link href="/companies/new" className="btn-primary mt-4 inline-flex">
+        <div className="card mx-auto max-w-xl text-center">
+          <h2 className="text-base font-semibold text-stone-900">Все още няма добавени дружества</h2>
+          <p className="mt-2 text-sm text-stone-600">
+            След като добавите ЕООД, ООД или АД, ще можете да:
+          </p>
+          <ul className="mx-auto mt-4 max-w-sm space-y-1.5 text-left text-sm text-stone-600">
+            <li className="flex gap-2">
+              <span aria-hidden className="text-brand-600">·</span>
+              изчислявате корпоративен данък по чл. 92 ЗКПО (10%)
+            </li>
+            <li className="flex gap-2">
+              <span aria-hidden className="text-brand-600">·</span>
+              следите дивиденти и удържания при източника (5%)
+            </li>
+            <li className="flex gap-2">
+              <span aria-hidden className="text-brand-600">·</span>
+              подготвите декларация за подаване в НАП
+            </li>
+          </ul>
+          <Link href="/companies/new" className="btn-primary mt-6 inline-flex">
             Добави първото си дружество
           </Link>
         </div>

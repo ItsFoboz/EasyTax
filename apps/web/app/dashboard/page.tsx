@@ -130,7 +130,20 @@ export default async function DashboardPage() {
 
       <div className="card">
         <h2 className="text-lg font-semibold">Разбивка</h2>
-        <dl className="mt-4 space-y-2 font-mono text-sm">
+        {result.gross_income === 0 ? (
+          <div className="mt-4 rounded-lg bg-stone-50 p-6 text-center">
+            <p className="text-sm text-stone-700">
+              Все още няма приходи за {taxYear} г.
+            </p>
+            <p className="mt-1 text-xs text-stone-500">
+              Качете фактура, за да видите разбивката.
+            </p>
+            <Link href="/invoices" className="btn-secondary mt-4 inline-flex">
+              Към фактури
+            </Link>
+          </div>
+        ) : (
+        <dl className="mt-4 space-y-2 text-sm">
           <Row label="Брутен доход" value={formatMoney(result.gross_income, taxYear)} />
           <Row label="− 25% нормативно признати разходи" value={`− ${formatMoney(result.normative_expenses, taxYear)}`} />
           <Divider />
@@ -141,6 +154,7 @@ export default async function DashboardPage() {
           <Row label="Облагаема основа" value={formatMoney(result.final_taxable_base, taxYear)} bold />
           <Row label="Данък върху доходите (10%)" value={formatMoney(result.income_tax, taxYear)} bold />
         </dl>
+        )}
       </div>
 
       <div className="card">
@@ -183,7 +197,7 @@ export default async function DashboardPage() {
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div className="card">
-      <div className="text-xs uppercase tracking-wide text-stone-500">{label}</div>
+      <div className="text-xs text-stone-500">{label}</div>
       <div className="mt-1 text-2xl font-semibold tabular-nums">{value}</div>
     </div>
   );
